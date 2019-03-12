@@ -1,45 +1,28 @@
 package de.budget.project.controller;
 
 import de.budget.project.model.user.User;
-import de.budget.project.model.user.UserInfoWebResponse;
 import de.budget.project.model.wallet.Wallet;
 import de.budget.project.service.services.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/wallet")
+@RequestMapping("/api")
 public class WalletController {
+
     @Autowired
     WalletService walletService;
 
-    @GetMapping("/allWallets")
-    public List<Wallet> getAllWallets(){
-        return walletService.getAllWallets();
+    @GetMapping("/wallet/{id}")
+    public Wallet getWalletById(@PathVariable("id") Long id) {
+        return walletService.getWalletById(id);
     }
 
-    @GetMapping("/findById/{id}")
-    public Wallet findWalletById(@PathVariable("id") Long id){
-        return walletService.findWalletById(id);
+    @GetMapping("/wallet/byUser/{id}")
+    public Wallet getWalletByUserId(@PathVariable("id") User user) {
+        return walletService.getWalletByUserId(user);
     }
-
-    @GetMapping("/findByUserId/{id}")
-    public Wallet findWalletByUserId(@PathVariable ("id") User id){
-        return walletService.findWalletByUserId(id);
-    }
-
-//    @GetMapping("/getUserInfoByEmail/{email}")
-//    public UserInfoWebResponse getUserInfoByEmail(@PathVariable ("email") String email){
-//           return walletService.getUserInfoByEmail(email);
-//    }
-
-//    @GetMapping("/getUserInfoByEmailThroughEntityManager/{email}")
-//    public UserInfoWebResponse getUserInfoByEmailCustom(@PathVariable ("email") String email){
-//        return walletService.getUserInfoByEmailCustom(email);
-//    }
-
-
-
 }

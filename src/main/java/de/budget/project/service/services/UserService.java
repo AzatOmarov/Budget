@@ -7,7 +7,7 @@ public interface UserService {
 
     void createUser(UserWebDto userWebDto);
 
-    User findUserById(Long userId);
+    User getUserById(Long id);
 
-    User findUserByEmail(String email);
+    User getUserByEmail(String email);
 }

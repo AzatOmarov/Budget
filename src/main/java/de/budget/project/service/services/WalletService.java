@@ -5,7 +5,7 @@ import de.budget.project.model.wallet.Wallet;
 
 public interface WalletService {
 
-    Wallet findWalletById(Long walletId);
+    Wallet getWalletById(Long id);
 
-    Wallet findWalletByUserId(User user);
+    Wallet getWalletByUserId(User user);
 }

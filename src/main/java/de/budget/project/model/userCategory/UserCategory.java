@@ -1,5 +1,6 @@
-package de.budget.project.model.category;
+package de.budget.project.model.userCategory;
 
+import de.budget.project.model.category.Category;
 import de.budget.project.model.user.User;
 import lombok.Data;
 

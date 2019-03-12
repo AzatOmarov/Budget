@@ -1,48 +1,30 @@
 package de.budget.project.controller;
 
 import de.budget.project.model.user.User;
-import de.budget.project.model.user.UserInfoWebResponse;
 import de.budget.project.model.user.UserWebDto;
 import de.budget.project.service.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired
     UserService userService;
 
-    @PostMapping("/createUser")
-    public void createUser(@RequestBody UserWebDto userWebDto){
+    @PostMapping("/user")
+    public void createUser(@RequestBody UserWebDto userWebDto) {
         userService.createUser(userWebDto);
     }
 
-    @GetMapping("/users")
-    public List<User> getAllUsers(){
-        return userService.getUserList();
+    @GetMapping("/user/{id}")
+    public User getUserById(@PathVariable("id") Long id) {
+        return userService.getUserById(id);
     }
 
-    @GetMapping("/findByEmail/{email}")
-    public User findUserByEmail(@PathVariable ("email") String email){
-           return userService.findUserByEmail(email);
+    @GetMapping("/user/byEmail/{email}")
+    public User findUserByEmail(@PathVariable("email") String email) {
+        return userService.getUserByEmail(email);
     }
-
-
-    @GetMapping("/by/{id}")
-    public User getUserById(@PathVariable ("id") Long id){
-        return userService.findUserById(id);
-    }
-
-    @GetMapping("/userInfoBy/{email}")
-    public UserInfoWebResponse getUserInfoByEmail(@PathVariable("email") String email){
-        return userService.getUserInfoByEmail(email);
-    }
-
-
-
-
 }

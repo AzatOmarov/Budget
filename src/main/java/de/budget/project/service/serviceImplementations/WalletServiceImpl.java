@@ -14,12 +14,12 @@ public class WalletServiceImpl implements WalletService {
     WalletRepository walletRepository;
 
     @Override
-    public Wallet findWalletById(Long walletId) {
-        return walletRepository.findWalletById(walletId);
+    public Wallet getWalletById(Long id) {
+        return walletRepository.getWalletById(id);
     }
 
     @Override
-    public Wallet findWalletByUserId(User user) {
-        return walletRepository.findWalletByUserId(user);
+    public Wallet getWalletByUserId(User user) {
+        return walletRepository.getWalletByUserId(user);
     }
 }
