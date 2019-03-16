@@ -9,6 +9,4 @@ import java.util.List;
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
     Transaction getTransactionById(Long id);
-
-    List<Transaction> getAllByUserId(User user);
 }

@@ -1,8 +1,6 @@
 package de.budget.project.service.serviceImplementations;
 
 import de.budget.project.model.transaction.Transaction;
-import de.budget.project.model.transaction.TransactionWebDto;
-import de.budget.project.model.user.User;
 import de.budget.project.repository.TransactionRepository;
 import de.budget.project.service.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +15,21 @@ public class TransactionServiceImpl implements TransactionService {
     TransactionRepository transactionRepository;
 
     @Override
-    public void createTransaction(TransactionWebDto transactionWebDto) {
-        Transaction transaction = new Transaction();
-        transaction.setDate(transactionWebDto.getDate());
-        transaction.setAmount(transactionWebDto.getAmount());
-        transaction.setDescription(transactionWebDto.getDescription());
-        transaction.setCategoryId(transactionWebDto.getCategory());
-        transaction.setUserId(transactionWebDto.getUser());
-        transactionRepository.save(transaction);
+    public List<Transaction> getAll() {
+        return transactionRepository.findAll();
+    }
+
+
+    @Override
+    public Transaction createTransaction(Transaction transaction) {
+        Transaction transactionSaved = new Transaction(transaction.getId(),
+                                    transaction.getAmount(),
+                                    transaction.getWalletId(),
+                                    transaction.getDescription(),
+                                    transaction.getCreatedDate(),
+                                    transaction.getUpdatedDate());
+        transactionRepository.save(transactionSaved);
+        return transactionSaved;
     }
 
     @Override
@@ -32,8 +37,4 @@ public class TransactionServiceImpl implements TransactionService {
         return transactionRepository.getTransactionById(id);
     }
 
-    @Override
-    public List<Transaction> getAllByUserId(User user) {
-        return transactionRepository.getAllByUserId(user);
-    }
 }

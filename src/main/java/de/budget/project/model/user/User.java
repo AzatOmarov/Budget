@@ -1,25 +1,23 @@
 package de.budget.project.model.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "USER")
 public class User {
 
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "USER_ID")
     private Long id;
 
@@ -41,4 +39,5 @@ public class User {
     @Column(name = "UPDATED_DATE", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
+
 }

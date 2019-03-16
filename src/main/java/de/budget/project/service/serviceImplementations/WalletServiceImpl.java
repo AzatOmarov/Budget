@@ -7,6 +7,8 @@ import de.budget.project.service.services.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class WalletServiceImpl implements WalletService {
 
@@ -18,8 +20,25 @@ public class WalletServiceImpl implements WalletService {
         return walletRepository.getWalletById(id);
     }
 
+    public List<Wallet> getAll() {
+        return walletRepository.findAll();
+    }
+
     @Override
     public Wallet getWalletByUserId(User user) {
         return walletRepository.getWalletByUserId(user);
+    }
+
+    @Override
+    public Wallet createWallet(Wallet wallet) {
+        Wallet walletCreated = new Wallet(wallet.getId(),
+                wallet.getUserId(),
+                wallet.getBalance(),
+                wallet.getCurrency(),
+                wallet.getUpdatedDate(),
+                wallet.getTransactions()
+                );
+        walletRepository.save(walletCreated);
+        return walletCreated;
     }
 }

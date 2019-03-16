@@ -1,25 +1,20 @@
 package de.budget.project.model.transaction;
 
-import de.budget.project.model.category.Category;
-import de.budget.project.model.user.User;
+import de.budget.project.model.wallet.Wallet;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GenerationType;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "TRANSACTION")
 public class Transaction {
 
@@ -28,19 +23,19 @@ public class Transaction {
     @Column(name = "TRANSACTION_ID")
     private Long id;
 
-    @Column(name = "DATE", nullable = false)
-    private Date date;
+//    @Column(name = "DATE", nullable = false)
+//    private Date date;
 
     @Column(name = "AMOUNT", nullable = false)
-    private Double amount;
+    private BigDecimal amount;
 
-    @JoinColumn(name = "USER_ID", nullable = false, unique = true)
-    @OneToOne
-    private User userId;
+    @ManyToOne
+    @JoinColumn(name = "WALLET_ID", nullable = false, unique = true)
+    private Wallet walletId;
 
-    @JoinColumn(name = "CATEGORY_ID", nullable = false, unique = true)
-    @OneToOne
-    private Category categoryId;
+//    @JoinColumn(name = "CATEGORY_ID", nullable = false, unique = true)
+//    @OneToOne
+//    private Category categoryId;
 
     @Column(name = "DESCRIPTION")
     private String description;

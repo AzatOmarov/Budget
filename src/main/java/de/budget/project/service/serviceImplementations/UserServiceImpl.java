@@ -10,9 +10,11 @@ import de.budget.project.repository.UserCategoryRepository;
 import de.budget.project.repository.UserRepository;
 import de.budget.project.repository.WalletRepository;
 import de.budget.project.service.services.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,8 +23,6 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     public static final List<Category> categories = new LinkedList<>();
-    private static final Double DEFAULT_BALANCE = 0.00;
-    private static final String DEFAULT_CURRENCY = "";
 
     @Autowired
     UserRepository userRepository;
@@ -31,31 +31,23 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserCategoryRepository userCategoryRepository;
 
+    @Autowired
+    ModelMapper modelMapper;
+
     @Override
-    public void createUser(UserWebDto userWebDto) {
-        User user = saveUser(userWebDto);
-        createDefaultWallet(user);
-        createUserCategory(user);
+    public User createUser(User user) {
+        User createdUser = new User(user.getId(),
+                user.getName(),
+                user.getPassword(),
+                user.getEmail(),
+                user.getCreatedDate(),
+                user.getCreatedDate());
+        userRepository.save(createdUser);
+        return createdUser;
     }
 
-    public User saveUser(UserWebDto userWebDto) {
-        User user = new User();
-        user.setName("");
-        user.setEmail(userWebDto.getEmail());
-        user.setPassword(userWebDto.getPassword());
-        userRepository.save(user);
-        return user;
-    }
 
-    public void createDefaultWallet(User user) {
-        Wallet wallet = new Wallet();
-        wallet.setUserId(user);
-        wallet.setBalance(DEFAULT_BALANCE);
-        wallet.setCurrency(DEFAULT_CURRENCY);
-        walletRepository.save(wallet);
-    }
-
-    private List<Category> fillDefaultCategory(){
+    private List<Category> fillDefaultCategory() {
         Category c1 = new Category();
         c1.setName("Food");
         c1.setCategoryTypeId(CategoryType.CREDIT);
@@ -69,7 +61,7 @@ public class UserServiceImpl implements UserService {
         return categories;
     }
 
-    public void createUserCategory(User user){
+    public void createUserCategory(User user) {
         List<Category> categories = fillDefaultCategory();
         UserCategory userCategory = new UserCategory();
         userCategory.setUserId(user);
@@ -87,4 +79,6 @@ public class UserServiceImpl implements UserService {
     public User getUserByEmail(String email) {
         return userRepository.getUserByEmail(email);
     }
+
+
 }
