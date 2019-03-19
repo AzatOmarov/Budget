@@ -3,7 +3,7 @@ package de.budget.project.model.transaction;
 import lombok.Data;
 
 @Data
-public class TransactionInfo {
+public class TransactionWebResponse {
 
     private Float amount;
     private String description;

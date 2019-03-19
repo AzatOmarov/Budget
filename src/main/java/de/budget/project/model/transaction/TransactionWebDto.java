@@ -9,5 +9,6 @@ public class TransactionWebDto {
     private Float amount;
     private Long walletId;
     private String description;
-    private Category category;
+//    private Long categoryId;
+    private Long categoryId;
 }

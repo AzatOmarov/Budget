@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class WalletWebDto {
 
-    private Long Id;
+//    private Long Id;
     private Long userId;
     private String currency;
 

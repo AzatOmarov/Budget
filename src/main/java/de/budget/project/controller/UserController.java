@@ -1,7 +1,7 @@
 package de.budget.project.controller;
 
 import de.budget.project.model.user.User;
-import de.budget.project.model.user.UserInfo;
+import de.budget.project.model.user.UserWebResponse;
 import de.budget.project.model.user.UserWebDto;
 import de.budget.project.services.UserService;
 import de.budget.project.services.WalletService;
@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public UserInfo getUserById(@PathVariable("id") Long id) {
+    public UserWebResponse getUserById(@PathVariable("id") Long id) {
         return convertToUserInfo(userService.getUserById(id));
     }
 
@@ -54,13 +54,13 @@ public class UserController {
         return user;
     }
 
-    public UserWebDto convertToDto(User user) {
+    private UserWebDto convertToDto(User user) {
         UserWebDto userWebDto = modelMapper.map(user, UserWebDto.class);
         return userWebDto;
     }
 
-    public UserInfo convertToUserInfo(User user) {
-        UserInfo userInfo = modelMapper.map(user, UserInfo.class);
-        return userInfo;
+    private UserWebResponse convertToUserInfo(User user) {
+        UserWebResponse userWebResponse = modelMapper.map(user, UserWebResponse.class);
+        return userWebResponse;
     }
 }

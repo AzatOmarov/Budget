@@ -1,7 +1,7 @@
 package de.budget.project.controller;
 
 import de.budget.project.model.transaction.Transaction;
-import de.budget.project.model.transaction.TransactionInfo;
+import de.budget.project.model.transaction.TransactionWebResponse;
 import de.budget.project.model.transaction.TransactionWebDto;
 import de.budget.project.services.TransactionService;
 import org.modelmapper.ModelMapper;
@@ -24,29 +24,22 @@ public class TransactionController {
     @PostMapping("/transactions")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public TransactionWebDto createTransaction(@RequestBody TransactionWebDto tWeb){
-        Transaction transactionSaved = transactionService.createTransaction(tWeb.getAmount(), tWeb.getWalletId(), tWeb.getDescription(), tWeb.getCategory());
+    public TransactionWebDto createTransaction(@RequestBody TransactionWebDto tWebDto){
+        Transaction transactionSaved = transactionService.createTransaction(tWebDto);
         return convertToDto(transactionSaved);
     }
 
     @GetMapping("/transaction/{id}")
-    public TransactionInfo getTransactionById(@PathVariable("id") Long id) {
+    public TransactionWebResponse getTransactionById(@PathVariable("id") Long id) {
         return transactionService.getTransactionById(id);
     }
 
-    @GetMapping("/transactions/{id}")
+    @GetMapping("/transactions/wallet/{id}")
     public List <Transaction> transactionsByWalletId(@PathVariable("id") Long walletId){
         return transactionService.getTransactionsByWalletId(walletId);
     }
 
-    public Transaction convertToEntity(TransactionWebDto transactionWebDto){
-        Transaction transaction = modelMapper.map(transactionWebDto, Transaction.class);
-        //transaction.setAmount(transactionWebDto.getAmount());
-        //transaction.setWallet(transactionWebDto.getWallet());
-        //transaction.setDescription(transactionWebDto.getDescription());
-        return transaction;
-    }
-    public TransactionWebDto convertToDto(Transaction transaction){
+    private TransactionWebDto convertToDto(Transaction transaction){
         TransactionWebDto transactionWebDto = modelMapper.map(transaction, TransactionWebDto.class);
         return transactionWebDto;
     }
