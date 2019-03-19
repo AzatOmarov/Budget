@@ -1,17 +1,23 @@
 package de.budget.project.model.wallet;
 
-import de.budget.project.model.transaction.Transaction;
 import de.budget.project.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
-import java.math.BigDecimal;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Data
 @Entity
@@ -21,16 +27,13 @@ import java.util.Set;
 public class Wallet {
 
     @Id
-    @GeneratedValue
-    @Column(name = "WALLET_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
 
-    @JoinColumn(name = "USER_ID", nullable = false, unique = true)
+    @JoinColumn(name = "USER_ID", nullable = false)
     @OneToOne
-    private User userId;
-
-    @Column(name = "BALANCE")
-    private BigDecimal balance;
+    private User user;
 
     @Column(name = "CURRENCY")
     private String currency;
@@ -39,8 +42,5 @@ public class Wallet {
     @Column(name = "UPDATED_DATE", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
-
-    @OneToMany(mappedBy = "walletId")
-    private Set<Transaction> transactions = new HashSet<Transaction>();
 
 }

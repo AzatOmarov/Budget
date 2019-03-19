@@ -1,41 +1,53 @@
 package de.budget.project.model.transaction;
 
+import de.budget.project.model.category.Category;
 import de.budget.project.model.wallet.Wallet;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
-import java.math.BigDecimal;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.CascadeType;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 
 @Data
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Table(name = "TRANSACTION")
 public class Transaction {
 
+    public Transaction(Float amount, Wallet wallet, String description, Category category) {
+        this.amount = amount;
+        this.wallet = wallet;
+        this.description = description;
+        this.category = category;
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "TRANSACTION_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
 
-//    @Column(name = "DATE", nullable = false)
-//    private Date date;
-
     @Column(name = "AMOUNT", nullable = false)
-    private BigDecimal amount;
+    private Float amount;
 
-    @ManyToOne
-    @JoinColumn(name = "WALLET_ID", nullable = false, unique = true)
-    private Wallet walletId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "WALLET_ID", referencedColumnName = "ID")
+    private Wallet wallet;
 
-//    @JoinColumn(name = "CATEGORY_ID", nullable = false, unique = true)
-//    @OneToOne
-//    private Category categoryId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "CATEGORY_ID", referencedColumnName = "ID")
+    private Category category;
 
     @Column(name = "DESCRIPTION")
     private String description;

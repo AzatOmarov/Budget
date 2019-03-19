@@ -1,9 +1,10 @@
-package de.budget.project.service.serviceImplementations;
+package de.budget.project.services.impl;
 
 import de.budget.project.model.user.User;
 import de.budget.project.model.wallet.Wallet;
+import de.budget.project.repository.UserRepository;
 import de.budget.project.repository.WalletRepository;
-import de.budget.project.service.services.WalletService;
+import de.budget.project.services.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,11 @@ public class WalletServiceImpl implements WalletService {
 
     @Autowired
     WalletRepository walletRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+
 
     @Override
     public Wallet getWalletById(Long id) {
@@ -26,19 +32,14 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public Wallet getWalletByUserId(User user) {
-        return walletRepository.getWalletByUserId(user);
+        return walletRepository.getWalletByUserId(user.getId());
     }
 
     @Override
-    public Wallet createWallet(Wallet wallet) {
-        Wallet walletCreated = new Wallet(wallet.getId(),
-                wallet.getUserId(),
-                wallet.getBalance(),
-                wallet.getCurrency(),
-                wallet.getUpdatedDate(),
-                wallet.getTransactions()
-                );
-        walletRepository.save(walletCreated);
-        return walletCreated;
+    public Wallet createWallet(Long userId, String currency) {
+        Wallet wallet = new Wallet();
+        wallet.setUser(userRepository.getOne(userId));
+        wallet.setCurrency(currency);
+        return walletRepository.save(wallet);
     }
 }

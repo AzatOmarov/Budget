@@ -1,4 +1,4 @@
-package de.budget.project.service.services;
+package de.budget.project.services;
 
 import de.budget.project.model.user.User;
 import de.budget.project.model.wallet.Wallet;
@@ -13,5 +13,5 @@ public interface WalletService {
 
     Wallet getWalletByUserId(User user);
 
-    Wallet createWallet(Wallet wallet);
+    Wallet createWallet(Long userId, String currency);
 }

@@ -2,12 +2,11 @@ package de.budget.project.model.category;
 
 import lombok.Data;
 
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GenerationType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Id;
 
 @Data
 @Entity
@@ -15,13 +14,10 @@ import javax.persistence.Table;
 public class Category {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "CATEGORY_ID")
+    @GeneratedValue
+    @Column(name = "ID")
     private Long id;
-
-    @Column(name = "NAME", nullable = false)
+    @Column(name = "NAME")
     private String name;
 
-    @Column(name = "CATEGORY_TYPE_ID", nullable = false)
-    private CategoryType categoryTypeId;
 }

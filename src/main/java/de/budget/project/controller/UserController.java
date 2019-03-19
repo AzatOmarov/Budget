@@ -1,9 +1,10 @@
 package de.budget.project.controller;
 
 import de.budget.project.model.user.User;
+import de.budget.project.model.user.UserInfo;
 import de.budget.project.model.user.UserWebDto;
-import de.budget.project.service.services.UserService;
-import de.budget.project.service.services.WalletService;
+import de.budget.project.services.UserService;
+import de.budget.project.services.WalletService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +18,8 @@ public class UserController {
 
     @Autowired
     ModelMapper modelMapper;
-
     @Autowired
     UserService userService;
-
     @Autowired
     WalletService walletService;
 
@@ -33,29 +32,35 @@ public class UserController {
         return convertToDto(userCreated);
     }
 
-    public User convertToEntity(UserWebDto userWebDto) throws ParseException {
-        User user = modelMapper.map(userWebDto, User.class);
-        user.setName(userWebDto.getName());
-        user.setPassword(userWebDto.getPassword());
-        user.setEmail(userWebDto.getEmail());
-        return user;
-    }
-
-    public UserWebDto convertToDto(User user) {
-        UserWebDto userWebDto = modelMapper.map(user, UserWebDto.class);
-        userWebDto.setName(user.getName());
-        userWebDto.setEmail(user.getEmail());
-        userWebDto.setPassword(user.getPassword());
-        return userWebDto;
-    }
-
     @GetMapping("/users/{id}")
-    public User getUserById(@PathVariable("id") Long id) {
-        return userService.getUserById(id);
+    public UserInfo getUserById(@PathVariable("id") Long id) {
+        return convertToUserInfo(userService.getUserById(id));
     }
 
     @GetMapping("/users/email/{email}")
     public User findUserByEmail(@PathVariable("email") String email) {
         return userService.getUserByEmail(email);
+    }
+
+
+    @DeleteMapping("/users/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUserById(@PathVariable("id") Long id){
+        userService.deleteUserById(id);
+    }
+
+    public User convertToEntity(UserWebDto userWebDto) throws ParseException {
+        User user = modelMapper.map(userWebDto, User.class);
+        return user;
+    }
+
+    public UserWebDto convertToDto(User user) {
+        UserWebDto userWebDto = modelMapper.map(user, UserWebDto.class);
+        return userWebDto;
+    }
+
+    public UserInfo convertToUserInfo(User user) {
+        UserInfo userInfo = modelMapper.map(user, UserInfo.class);
+        return userInfo;
     }
 }

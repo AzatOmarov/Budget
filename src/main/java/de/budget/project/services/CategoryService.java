@@ -1,4 +1,4 @@
-package de.budget.project.service.services;
+package de.budget.project.services;
 
 import de.budget.project.model.category.Category;
 import de.budget.project.model.category.CategoryType;
@@ -9,8 +9,4 @@ import java.util.List;
 public interface CategoryService {
 
     void createCategory(CategoryWebDto categoryWebDto);
-
-    Category getCategoryById(Long id);
-
-    List<Category> getAllByCategoryTypeId(CategoryType categoryType);
 }

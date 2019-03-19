@@ -1,9 +1,9 @@
 package de.budget.project.controller;
 
 import de.budget.project.model.transaction.Transaction;
+import de.budget.project.model.transaction.TransactionInfo;
 import de.budget.project.model.transaction.TransactionWebDto;
-import de.budget.project.model.user.User;
-import de.budget.project.service.services.TransactionService;
+import de.budget.project.services.TransactionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,27 +24,26 @@ public class TransactionController {
     @PostMapping("/transactions")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public TransactionWebDto createTransaction(@RequestBody TransactionWebDto transactionWebDto){
-        Transaction transaction = convertToEntity(transactionWebDto);
-        Transaction transactionSaved = transactionService.createTransaction(transaction);
+    public TransactionWebDto createTransaction(@RequestBody TransactionWebDto tWeb){
+        Transaction transactionSaved = transactionService.createTransaction(tWeb.getAmount(), tWeb.getWalletId(), tWeb.getDescription(), tWeb.getCategory());
         return convertToDto(transactionSaved);
     }
 
-    @GetMapping("/transactions/{id}")
-    public Transaction getTransactionById(@PathVariable("id") Long id) {
+    @GetMapping("/transaction/{id}")
+    public TransactionInfo getTransactionById(@PathVariable("id") Long id) {
         return transactionService.getTransactionById(id);
     }
 
-    @GetMapping("/transactions")
-    public List<Transaction> transactions (){
-        return transactionService.getAll();
+    @GetMapping("/transactions/{id}")
+    public List <Transaction> transactionsByWalletId(@PathVariable("id") Long walletId){
+        return transactionService.getTransactionsByWalletId(walletId);
     }
 
     public Transaction convertToEntity(TransactionWebDto transactionWebDto){
         Transaction transaction = modelMapper.map(transactionWebDto, Transaction.class);
-        transaction.setAmount(transactionWebDto.getAmount());
-        transaction.setWalletId(transactionWebDto.getWalletId());
-        transaction.setDescription(transactionWebDto.getDescription());
+        //transaction.setAmount(transactionWebDto.getAmount());
+        //transaction.setWallet(transactionWebDto.getWallet());
+        //transaction.setDescription(transactionWebDto.getDescription());
         return transaction;
     }
     public TransactionWebDto convertToDto(Transaction transaction){
