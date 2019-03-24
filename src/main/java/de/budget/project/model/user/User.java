@@ -10,8 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Table;
 import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.GenerationType;
@@ -19,10 +17,10 @@ import javax.persistence.Id;
 import java.util.Date;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "USER")
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -33,11 +31,11 @@ public class User {
     @Column(name = "NAME", length = 50)
     private String name;
 
-    @Column(name = "PASSWORD", nullable = false, length = 50)
-    private String password;
-
     @Column(name = "EMAIL", nullable = false, length = 50, unique = true)
     private String email;
+
+    @Column(name = "PASSWORD", nullable = false, length = 50)
+    private String password;
 
     @CreationTimestamp
     @Column(name = "CREATED_DATE", nullable = false, updatable = false)
@@ -48,5 +46,4 @@ public class User {
     @Column(name = "UPDATED_DATE", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
-
 }

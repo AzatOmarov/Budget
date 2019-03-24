@@ -7,17 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Table;
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.CascadeType;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
@@ -26,17 +16,22 @@ import java.util.Date;
 @Table(name = "TRANSACTION")
 public class Transaction {
 
-    public Transaction(Float amount, Wallet wallet, String description, Category category) {
+    public Transaction(Date customDate, Float amount, Wallet wallet, Category category, String description) {
+        this.customDate = customDate;
         this.amount = amount;
         this.wallet = wallet;
-        this.description = description;
         this.category = category;
+        this.description = description;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CUSTOM_DATE", nullable = false)
+    private Date customDate;
 
     @Column(name = "AMOUNT", nullable = false)
     private Float amount;

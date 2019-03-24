@@ -1,16 +1,21 @@
 package de.budget.project.controller;
 
 import de.budget.project.model.user.User;
-import de.budget.project.model.user.UserInfo;
 import de.budget.project.model.user.UserWebDto;
+import de.budget.project.model.user.UserWebResponse;
 import de.budget.project.services.UserService;
-import de.budget.project.services.WalletService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
-import java.text.ParseException;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
@@ -18,49 +23,44 @@ public class UserController {
 
     @Autowired
     ModelMapper modelMapper;
+
     @Autowired
     UserService userService;
-    @Autowired
-    WalletService walletService;
 
     @PostMapping("/users")
-    @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public UserWebDto createUser(@RequestBody UserWebDto userWebDto) throws ParseException {
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserWebDto createUser(@RequestBody UserWebDto userWebDto) {
         User user = convertToEntity(userWebDto);
         User userCreated = userService.createUser(user);
         return convertToDto(userCreated);
     }
 
     @GetMapping("/users/{id}")
-    public UserInfo getUserById(@PathVariable("id") Long id) {
-        return convertToUserInfo(userService.getUserById(id));
+    public UserWebResponse getUserById(@PathVariable("id") Long id) {
+        return convertToWebResponse(userService.getUserById(id));
     }
 
     @GetMapping("/users/email/{email}")
-    public User findUserByEmail(@PathVariable("email") String email) {
-        return userService.getUserByEmail(email);
+    public UserWebResponse findUserByEmail(@PathVariable("email") String email) {
+        return convertToWebResponse(userService.getUserByEmail(email));
     }
-
 
     @DeleteMapping("/users/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUserById(@PathVariable("id") Long id){
+    public void deleteUserById(@PathVariable("id") Long id) {
         userService.deleteUserById(id);
     }
 
-    public User convertToEntity(UserWebDto userWebDto) throws ParseException {
-        User user = modelMapper.map(userWebDto, User.class);
-        return user;
+    private User convertToEntity(UserWebDto userWebDto) {
+        return modelMapper.map(userWebDto, User.class);
     }
 
-    public UserWebDto convertToDto(User user) {
-        UserWebDto userWebDto = modelMapper.map(user, UserWebDto.class);
-        return userWebDto;
+    private UserWebDto convertToDto(User user) {
+        return modelMapper.map(user, UserWebDto.class);
     }
 
-    public UserInfo convertToUserInfo(User user) {
-        UserInfo userInfo = modelMapper.map(user, UserInfo.class);
-        return userInfo;
+    private UserWebResponse convertToWebResponse(User user) {
+        return modelMapper.map(user, UserWebResponse.class);
     }
 }

@@ -1,11 +1,32 @@
 package de.budget.project.services.impl;
 
+import de.budget.project.model.category.Category;
+import de.budget.project.model.categoryType.CategoryType;
 import de.budget.project.repository.CategoryRepository;
+import de.budget.project.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
 
-public class CategoryServiceImpl {
+@Service
+public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Override
+    public void createCategory(Category category) {
+        categoryRepository.save(category);
+    }
+
+    @Override
+    public Category getCategoryById(Long id) {
+        return categoryRepository.getCategoryById(id);
+    }
+
+    @Override
+    public List<Category> getAllByCategoryType(CategoryType categoryType) {
+        return categoryRepository.getAllByCategoryType(categoryType);
+    }
 }

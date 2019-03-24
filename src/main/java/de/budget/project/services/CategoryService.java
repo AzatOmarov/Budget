@@ -1,12 +1,15 @@
 package de.budget.project.services;
 
 import de.budget.project.model.category.Category;
-import de.budget.project.model.category.CategoryType;
-import de.budget.project.model.category.CategoryWebDto;
+import de.budget.project.model.categoryType.CategoryType;
 
 import java.util.List;
 
 public interface CategoryService {
 
-    void createCategory(CategoryWebDto categoryWebDto);
+    void createCategory(Category category);
+
+    Category getCategoryById(Long id);
+
+    List<Category> getAllByCategoryType(CategoryType categoryType);
 }
