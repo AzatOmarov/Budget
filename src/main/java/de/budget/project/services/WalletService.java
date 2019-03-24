@@ -16,4 +16,3 @@ public interface WalletService {
 
     List<Wallet> getAllByUserEmail(String email);
 }
-//add getCategoryType or Category
