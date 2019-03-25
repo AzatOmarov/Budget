@@ -11,4 +11,6 @@ public interface TransactionService {
     Transaction getTransactionById(Long id);
 
     List<Transaction> getTransactionsByWalletId(Long walletId);
+
+    Float recalculateBalance(Long walletId);
 }

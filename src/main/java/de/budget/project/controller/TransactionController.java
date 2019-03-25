@@ -1,7 +1,6 @@
 package de.budget.project.controller;
 
 import de.budget.project.model.category.Category;
-import de.budget.project.model.categoryType.CategoryType;
 import de.budget.project.model.transaction.Transaction;
 import de.budget.project.model.transaction.TransactionWebDto;
 import de.budget.project.model.transaction.TransactionWebResponse;
@@ -78,7 +77,7 @@ public class TransactionController {
         return new TransactionWebResponse(transaction.getAmount(),
                 transaction.getDescription(),
                 transaction.getCategory().getName(),
-                recalculateBalance(transaction.getWallet().getId()));
+                transactionService.recalculateBalance(transaction.getWallet().getId()));
     }
 
     private List<TransactionWebResponse> convertToListWebResponse(List<Transaction> transactions) {
@@ -86,26 +85,5 @@ public class TransactionController {
                 .stream()
                 .map(this::convertToWebResponse)
                 .collect(Collectors.toList());
-    }
-
-    private Float recalculateBalance(Long walletId) {
-        List<Transaction> allTransactions = transactionService.getTransactionsByWalletId(walletId);
-        Double creditSum = allTransactions
-                .stream()
-                .filter(p -> p.getCategory()
-                        .getCategoryType()
-                        .equals(CategoryType.CREDIT))
-                .mapToDouble(Transaction::getAmount)
-                .sum();
-        Float credit = new Float(creditSum);
-        Double debitSum = allTransactions
-                .stream()
-                .filter(p -> p.getCategory()
-                        .getCategoryType()
-                        .equals(CategoryType.DEBIT))
-                .mapToDouble(Transaction::getAmount)
-                .sum();
-        Float debit = new Float(debitSum);
-        return debit - credit;
     }
 }

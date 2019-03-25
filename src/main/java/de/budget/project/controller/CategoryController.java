@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +26,7 @@ public class CategoryController {
     CategoryService categoryService;
 
     @PostMapping("/categories")
+    @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     public void createCategory(@RequestBody CategoryWebDto categoryWebDto) {
         categoryService.createCategory(convertToEntity(categoryWebDto));
