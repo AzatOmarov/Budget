@@ -15,8 +15,8 @@ public class WalletServiceImpl implements WalletService {
     WalletRepository walletRepository;
 
     @Override
-    public Wallet createWallet(Long userId, String currency) {
-        return walletRepository.save(walletRepository.createWallet(userId, currency));
+    public Wallet createWallet(Wallet wallet) {
+        return walletRepository.save(wallet);
     }
 
     @Override

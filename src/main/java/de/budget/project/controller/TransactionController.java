@@ -2,7 +2,7 @@ package de.budget.project.controller;
 
 import de.budget.project.model.category.Category;
 import de.budget.project.model.transaction.Transaction;
-import de.budget.project.model.transaction.TransactionWebDto;
+import de.budget.project.model.transaction.TransactionWebRequest;
 import de.budget.project.model.transaction.TransactionWebResponse;
 import de.budget.project.model.wallet.Wallet;
 import de.budget.project.services.CategoryService;
@@ -42,10 +42,8 @@ public class TransactionController {
     @PostMapping("/transactions")
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
-    public TransactionWebDto createTransaction(@RequestBody TransactionWebDto transactionWebDto) {
-        Transaction transaction = convertToEntity(transactionWebDto);
-        Transaction transactionCreated = transactionService.createTransaction(transaction);
-        return convertToDto(transactionCreated);
+    public TransactionWebRequest createTransaction(@RequestBody TransactionWebRequest transactionWebRequest) {
+        return convertToWebRequest(transactionService.createTransaction(convertToEntity(transactionWebRequest)));
     }
 
     @GetMapping("/transactions/{id}")
@@ -53,31 +51,35 @@ public class TransactionController {
         return convertToWebResponse(transactionService.getTransactionById(id));
     }
 
-    @GetMapping("/transactions/byWallet/{id}")
+    @GetMapping("/transactions/wallet/{id}")
     public List<TransactionWebResponse> getTransactionsByWalletId(@PathVariable("id") Long walletId) {
         List<Transaction> transactions = transactionService.getTransactionsByWalletId(walletId);
         return convertToListWebResponse(transactions);
     }
 
-    private Transaction convertToEntity(TransactionWebDto transactionWebDto) {
-        Wallet wallet = walletService.getWalletById(transactionWebDto.getWalletId());
-        Category category = categoryService.getCategoryById(transactionWebDto.getCategoryId());
-        return new Transaction(transactionWebDto.getCustomDate(),
-                transactionWebDto.getAmount(),
-                wallet,
-                category,
-                transactionWebDto.getDescription());
+    private Transaction convertToEntity(TransactionWebRequest transactionWebRequest) {
+        Wallet wallet = walletService.getWalletById(transactionWebRequest.getWalletId());
+        Category category = categoryService.getCategoryById(transactionWebRequest.getCategoryId());
+        Transaction transaction = new Transaction();
+        transaction.setCustomDate(transactionWebRequest.getCustomDate());
+        transaction.setAmount(transactionWebRequest.getAmount());
+        transaction.setWallet(wallet);
+        transaction.setCategory(category);
+        transaction.setDescription(transactionWebRequest.getDescription());
+        return transaction;
     }
 
-    private TransactionWebDto convertToDto(Transaction transaction) {
-        return modelMapper.map(transaction, TransactionWebDto.class);
+    private TransactionWebRequest convertToWebRequest(Transaction transaction) {
+        return modelMapper.map(transaction, TransactionWebRequest.class);
     }
 
     private TransactionWebResponse convertToWebResponse(Transaction transaction) {
-        return new TransactionWebResponse(transaction.getAmount(),
-                transaction.getDescription(),
-                transaction.getCategory().getName(),
-                transactionService.recalculateBalance(transaction.getWallet().getId()));
+        TransactionWebResponse transactionWebResponse = new TransactionWebResponse();
+        transactionWebResponse.setAmount(transaction.getAmount());
+        transactionWebResponse.setCategoryName(transaction.getCategory().getName());
+        transactionWebResponse.setDescription(transaction.getDescription());
+        transactionWebResponse.setBalance(transactionService.recalculateBalance(transaction.getWallet().getId()));
+        return transactionWebResponse;
     }
 
     private List<TransactionWebResponse> convertToListWebResponse(List<Transaction> transactions) {

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>b1b1197e-7384-4f2d-abff-36a21bf9f98f.SCHEMA:db_budget</OriginalElement>
+  <nodes>
+    <node x="220.0" y="212.0">b1b1197e-7384-4f2d-abff-36a21bf9f98f.TABLE:db_budget.wallet</node>
+    <node x="0.0" y="212.0">b1b1197e-7384-4f2d-abff-36a21bf9f98f.TABLE:db_budget.category</node>
+    <node x="25.5" y="44.0">b1b1197e-7384-4f2d-abff-36a21bf9f98f.TABLE:db_budget.category_type</node>
+    <node x="105.0" y="358.0">b1b1197e-7384-4f2d-abff-36a21bf9f98f.TABLE:db_budget.transaction</node>
+    <node x="211.5" y="0.0">b1b1197e-7384-4f2d-abff-36a21bf9f98f.TABLE:db_budget.user</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="b1b1197e-7384-4f2d-abff-36a21bf9f98f.TABLE:db_budget.wallet" target="b1b1197e-7384-4f2d-abff-36a21bf9f98f.TABLE:db_budget.user">
+      <point x="0.0" y="-48.0" />
+      <point x="0.0" y="81.0" />
+    </edge>
+    <edge source="b1b1197e-7384-4f2d-abff-36a21bf9f98f.TABLE:db_budget.category" target="b1b1197e-7384-4f2d-abff-36a21bf9f98f.TABLE:db_budget.category_type">
+      <point x="0.0" y="-48.0" />
+      <point x="0.0" y="37.0" />
+    </edge>
+    <edge source="b1b1197e-7384-4f2d-abff-36a21bf9f98f.TABLE:db_budget.transaction" target="b1b1197e-7384-4f2d-abff-36a21bf9f98f.TABLE:db_budget.category">
+      <point x="-49.5" y="-103.0" />
+      <point x="154.5" y="333.0" />
+      <point x="100.0" y="333.0" />
+      <point x="0.0" y="48.0" />
+    </edge>
+    <edge source="b1b1197e-7384-4f2d-abff-36a21bf9f98f.TABLE:db_budget.transaction" target="b1b1197e-7384-4f2d-abff-36a21bf9f98f.TABLE:db_budget.wallet">
+      <point x="49.5" y="-103.0" />
+      <point x="253.5" y="333.0" />
+      <point x="308.0" y="333.0" />
+      <point x="0.0" y="48.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="317.5" y="282.0" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Key columns</Category>
+    <Category>Columns</Category>
+  </Categories>
+</Diagram>
+

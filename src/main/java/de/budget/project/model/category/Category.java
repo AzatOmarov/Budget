@@ -1,6 +1,7 @@
 package de.budget.project.model.category;
 
 import de.budget.project.model.categoryType.CategoryType;
+import de.budget.project.model.categoryType.CategoryTypeConverter;
 import lombok.Data;
 
 import javax.persistence.Column;

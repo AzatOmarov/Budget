@@ -5,8 +5,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-public class TransactionWebDto {
-
+public class TransactionWebRequest {
     private Date customDate;
     private Float amount;
     private Long walletId;

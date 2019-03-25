@@ -28,8 +28,8 @@ public class CategoryController {
     @PostMapping("/categories")
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
-    public void createCategory(@RequestBody CategoryWebDto categoryWebDto) {
-        categoryService.createCategory(convertToEntity(categoryWebDto));
+    public CategoryWebDto createCategory(@RequestBody CategoryWebDto categoryWebDto) {
+        return convertToDto(categoryService.createCategory(convertToEntity(categoryWebDto)));
     }
 
     @GetMapping("/categories/{id}")
@@ -37,7 +37,7 @@ public class CategoryController {
         return convertToDto(categoryService.getCategoryById(id));
     }
 
-    @GetMapping("/categories/byType/{type}")
+    @GetMapping("/categories/type/{type}")
     public List<CategoryWebDto> getAllByCategoryType(@PathVariable CategoryType type) {
         List<Category> categories = categoryService.getAllByCategoryType(type);
         return categories
@@ -55,7 +55,6 @@ public class CategoryController {
         if (categoryWebDto.getName() == null) {
             categoryWebDto.setName("is null");
         }
-
         category.setName(categoryWebDto.getName());
         category.setCategoryType(CategoryType.findCategoryTypeName(categoryWebDto.getCategoryTypeName()));
         return category;

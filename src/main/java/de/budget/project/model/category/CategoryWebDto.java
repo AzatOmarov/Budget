@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class CategoryWebDto {
-
     private String name;
     private String categoryTypeName;
 

@@ -3,7 +3,8 @@ package de.budget.project.model.transaction;
 import de.budget.project.model.category.Category;
 import de.budget.project.model.wallet.Wallet;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -22,17 +23,10 @@ import java.util.Date;
 
 @Data
 @Entity
-@RequiredArgsConstructor
 @Table(name = "TRANSACTION")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Transaction {
-
-    public Transaction(Date customDate, Float amount, Wallet wallet, Category category, String description) {
-        this.customDate = customDate;
-        this.amount = amount;
-        this.wallet = wallet;
-        this.category = category;
-        this.description = description;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

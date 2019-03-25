@@ -46,7 +46,6 @@ public enum CategoryType {
         if (name == null) {
             throw new IllegalArgumentException("Name cannot be null");
         }
-
         Optional<CategoryType> categoryType = Arrays
                 .stream(CategoryType.values())
                 .filter(k -> k.getName().equals(name))

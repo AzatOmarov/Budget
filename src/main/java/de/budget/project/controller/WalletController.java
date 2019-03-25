@@ -1,8 +1,10 @@
 package de.budget.project.controller;
 
+import de.budget.project.model.user.User;
 import de.budget.project.model.wallet.Wallet;
 import de.budget.project.model.wallet.WalletWebRequest;
 import de.budget.project.model.wallet.WalletWebResponse;
+import de.budget.project.services.UserService;
 import de.budget.project.services.WalletService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +31,14 @@ public class WalletController {
     @Autowired
     WalletService walletService;
 
+    @Autowired
+    UserService userService;
+
     @PostMapping("/wallets")
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     public WalletWebRequest createWallet(@RequestBody WalletWebRequest walletWebRequest) {
-        return convertToWebRequest(walletService.createWallet(walletWebRequest.getUserId(),
-                walletWebRequest.getCurrency()));
+        return convertToWebRequest(walletService.createWallet(convertToEntity(walletWebRequest)));
     }
 
     @GetMapping("/wallets/{id}")
@@ -48,8 +52,19 @@ public class WalletController {
         return convertToListWebResponse(wallets);
     }
 
+    private Wallet convertToEntity(WalletWebRequest walletWebRequest) {
+        User user = userService.getUserById(walletWebRequest.getUserId());
+        Wallet wallet = new Wallet();
+        wallet.setUser(user);
+        wallet.setCurrency(walletWebRequest.getCurrency());
+        return wallet;
+    }
+
     private WalletWebRequest convertToWebRequest(Wallet wallet) {
-        return modelMapper.map(wallet, WalletWebRequest.class);
+        WalletWebRequest walletWebRequest = new WalletWebRequest();
+        walletWebRequest.setUserId(wallet.getUser().getId());
+        walletWebRequest.setCurrency(wallet.getCurrency());
+        return walletWebRequest;
     }
 
     private WalletWebResponse convertToWebResponse(Wallet wallet) {

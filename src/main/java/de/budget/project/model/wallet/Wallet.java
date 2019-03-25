@@ -31,6 +31,6 @@ public class Wallet {
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
     private User user;
 
-    @Column(name = "CURRENCY")
+    @Column(name = "CURRENCY", nullable = false)
     private String currency;
 }
