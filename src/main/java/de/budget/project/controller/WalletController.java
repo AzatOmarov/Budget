@@ -1,7 +1,8 @@
 package de.budget.project.controller;
 
 import de.budget.project.model.wallet.Wallet;
-import de.budget.project.model.wallet.WalletWebDto;
+import de.budget.project.model.wallet.WalletWebRequest;
+import de.budget.project.model.wallet.WalletWebResponse;
 import de.budget.project.services.WalletService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,42 +32,34 @@ public class WalletController {
     @PostMapping("/wallets")
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
-    public WalletWebDto createWallet(@RequestBody WalletWebDto walletWebDto) {
-        Wallet walletSaved = walletService.createWallet(walletWebDto.getUserId(), walletWebDto.getCurrency());
-        return convertToDto(walletSaved);
-    }
-
-    @GetMapping("/wallets")
-    public List<WalletWebDto> getAll() {
-        List<Wallet> wallets = walletService.getAll();
-        return convertToListDto(wallets);
+    public WalletWebRequest createWallet(@RequestBody WalletWebRequest walletWebRequest) {
+        return convertToWebRequest(walletService.createWallet(walletWebRequest.getUserId(),
+                walletWebRequest.getCurrency()));
     }
 
     @GetMapping("/wallets/{id}")
-    public WalletWebDto getWalletById(@PathVariable("id") Long id) {
-        return convertToDto(walletService.getWalletById(id));
+    public WalletWebResponse getWalletById(@PathVariable("id") Long id) {
+        return convertToWebResponse(walletService.getWalletById(id));
     }
 
-    @GetMapping("/wallets/byUser/{id}")
-    public List<WalletWebDto> getWalletByUserId(@PathVariable("id") Long userId) {
+    @GetMapping("/wallets/user/{id}")
+    public List<WalletWebResponse> getWalletByUserId(@PathVariable("id") Long userId) {
         List<Wallet> wallets = walletService.getAllByUserId(userId);
-        return convertToListDto(wallets);
+        return convertToListWebResponse(wallets);
     }
 
-    @GetMapping("/wallets/byUserEmail/{email}")
-    public List<WalletWebDto> getWalletByUserEmail(@PathVariable("email") String email) {
-        List<Wallet> wallets = walletService.getAllByUserEmail(email);
-        return convertToListDto(wallets);
+    private WalletWebRequest convertToWebRequest(Wallet wallet) {
+        return modelMapper.map(wallet, WalletWebRequest.class);
     }
 
-    private WalletWebDto convertToDto(Wallet wallet) {
-        return modelMapper.map(wallet, WalletWebDto.class);
+    private WalletWebResponse convertToWebResponse(Wallet wallet) {
+        return modelMapper.map(wallet, WalletWebResponse.class);
     }
 
-    private List<WalletWebDto> convertToListDto(List<Wallet> wallets) {
+    private List<WalletWebResponse> convertToListWebResponse(List<Wallet> wallets) {
         return wallets
                 .stream()
-                .map(this::convertToDto)
+                .map(this::convertToWebResponse)
                 .collect(Collectors.toList());
     }
 }

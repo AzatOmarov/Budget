@@ -3,7 +3,7 @@ package de.budget.project.model.user;
 import lombok.Data;
 
 @Data
-public class UserWebDto {
+public class UserWebRequest {
     private String name;
     private String password;
     private String email;

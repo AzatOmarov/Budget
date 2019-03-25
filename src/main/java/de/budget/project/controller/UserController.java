@@ -1,14 +1,13 @@
 package de.budget.project.controller;
 
 import de.budget.project.model.user.User;
-import de.budget.project.model.user.UserWebDto;
+import de.budget.project.model.user.UserWebRequest;
 import de.budget.project.model.user.UserWebResponse;
 import de.budget.project.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -30,10 +29,8 @@ public class UserController {
     @PostMapping("/users")
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
-    public UserWebDto createUser(@RequestBody UserWebDto userWebDto) {
-        User user = convertToEntity(userWebDto);
-        User userCreated = userService.createUser(user);
-        return convertToDto(userCreated);
+    public UserWebRequest createUser(@RequestBody UserWebRequest userWebRequest) {
+        return convertToWebRequest(userService.createUser(convertToEntity(userWebRequest)));
     }
 
     @GetMapping("/users/{id}")
@@ -46,18 +43,12 @@ public class UserController {
         return convertToWebResponse(userService.getUserByEmail(email));
     }
 
-    @DeleteMapping("/users/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUserById(@PathVariable("id") Long id) {
-        userService.deleteUserById(id);
+    private User convertToEntity(UserWebRequest userWebRequest) {
+        return modelMapper.map(userWebRequest, User.class);
     }
 
-    private User convertToEntity(UserWebDto userWebDto) {
-        return modelMapper.map(userWebDto, User.class);
-    }
-
-    private UserWebDto convertToDto(User user) {
-        return modelMapper.map(user, UserWebDto.class);
+    private UserWebRequest convertToWebRequest(User user) {
+        return modelMapper.map(user, UserWebRequest.class);
     }
 
     private UserWebResponse convertToWebResponse(User user) {

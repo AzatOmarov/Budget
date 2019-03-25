@@ -1,8 +1,9 @@
 package de.budget.project.model.wallet;
 
 import de.budget.project.model.user.User;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.CascadeType;
 import javax.persistence.ManyToOne;
@@ -17,13 +18,9 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name = "WALLET")
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class Wallet {
-
-    public Wallet(User user, String currency) {
-        this.user = user;
-        this.currency = currency;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
