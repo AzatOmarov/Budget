@@ -7,6 +7,8 @@ import de.budget.project.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -16,8 +18,13 @@ public class TransactionServiceImpl implements TransactionService {
     TransactionRepository transactionRepository;
 
     @Override
-    public Transaction createTransaction(Transaction transaction) {
-        return transactionRepository.save(transaction);
+    public void insertTransaction(Date customDate,
+                                  BigDecimal amount,
+                                  Long walletId,
+                                  Long categoryId,
+                                  String description) {
+        Date date = new Date();
+        transactionRepository.insertTransaction(customDate, amount, walletId, categoryId, description, date, date);
     }
 
     @Override
@@ -31,24 +38,25 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Float recalculateBalance(Long walletId) {
+    public BigDecimal recalculateBalance(Long walletId) {
         List<Transaction> allTransactions = transactionRepository.getTransactionsByWalletId(walletId);
-        Double creditSum = allTransactions
-                .stream()
-                .filter(p -> p.getCategory()
-                        .getCategoryType()
-                        .equals(CategoryType.CREDIT))
-                .mapToDouble(Transaction::getAmount)
-                .sum();
-        Float credit = new Float(creditSum);
-        Double debitSum = allTransactions
+        BigDecimal debitSum = allTransactions
                 .stream()
                 .filter(p -> p.getCategory()
                         .getCategoryType()
                         .equals(CategoryType.DEBIT))
-                .mapToDouble(Transaction::getAmount)
-                .sum();
-        Float debit = new Float(debitSum);
-        return debit - credit;
+                .map(Transaction::getAmount)
+                .reduce(BigDecimal::add)
+                .orElse(new BigDecimal(0));
+
+        BigDecimal creditSum = allTransactions
+                .stream()
+                .filter(p -> p.getCategory()
+                        .getCategoryType()
+                        .equals(CategoryType.CREDIT))
+                .map(Transaction::getAmount)
+                .reduce(BigDecimal::add)
+                .orElse(new BigDecimal(0));
+        return debitSum.add(creditSum);
     }
 }

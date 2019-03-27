@@ -2,7 +2,9 @@ package de.budget.project.model.category;
 
 import de.budget.project.model.categoryType.CategoryType;
 import de.budget.project.model.categoryType.CategoryTypeConverter;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -15,6 +17,8 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Table(name = "CATEGORY")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Category {
 
     @Id

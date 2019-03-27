@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface WalletService {
 
-    Wallet createWallet(Wallet wallet);
+    void insertWallet(Long userId, String currency);
 
     Wallet getWalletById(Long id);
 

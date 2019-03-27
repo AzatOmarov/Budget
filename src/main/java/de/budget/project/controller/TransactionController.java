@@ -1,13 +1,9 @@
 package de.budget.project.controller;
 
-import de.budget.project.model.category.Category;
 import de.budget.project.model.transaction.Transaction;
 import de.budget.project.model.transaction.TransactionWebRequest;
 import de.budget.project.model.transaction.TransactionWebResponse;
-import de.budget.project.model.wallet.Wallet;
-import de.budget.project.services.CategoryService;
 import de.budget.project.services.TransactionService;
-import de.budget.project.services.WalletService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,17 +29,15 @@ public class TransactionController {
     @Autowired
     TransactionService transactionService;
 
-    @Autowired
-    WalletService walletService;
-
-    @Autowired
-    CategoryService categoryService;
-
     @PostMapping("/transactions")
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
-    public TransactionWebRequest createTransaction(@RequestBody TransactionWebRequest transactionWebRequest) {
-        return convertToWebRequest(transactionService.createTransaction(convertToEntity(transactionWebRequest)));
+    public void createTransaction(@RequestBody TransactionWebRequest transactionWebRequest) {
+        transactionService.insertTransaction(transactionWebRequest.getCustomDate(),
+                transactionWebRequest.getAmount(),
+                transactionWebRequest.getWalletId(),
+                transactionWebRequest.getCategoryId(),
+                transactionWebRequest.getDescription());
     }
 
     @GetMapping("/transactions/{id}")
@@ -55,22 +49,6 @@ public class TransactionController {
     public List<TransactionWebResponse> getTransactionsByWalletId(@PathVariable("id") Long walletId) {
         List<Transaction> transactions = transactionService.getTransactionsByWalletId(walletId);
         return convertToListWebResponse(transactions);
-    }
-
-    private Transaction convertToEntity(TransactionWebRequest transactionWebRequest) {
-        Wallet wallet = walletService.getWalletById(transactionWebRequest.getWalletId());
-        Category category = categoryService.getCategoryById(transactionWebRequest.getCategoryId());
-        Transaction transaction = new Transaction();
-        transaction.setCustomDate(transactionWebRequest.getCustomDate());
-        transaction.setAmount(transactionWebRequest.getAmount());
-        transaction.setWallet(wallet);
-        transaction.setCategory(category);
-        transaction.setDescription(transactionWebRequest.getDescription());
-        return transaction;
-    }
-
-    private TransactionWebRequest convertToWebRequest(Transaction transaction) {
-        return modelMapper.map(transaction, TransactionWebRequest.class);
     }
 
     private TransactionWebResponse convertToWebResponse(Transaction transaction) {

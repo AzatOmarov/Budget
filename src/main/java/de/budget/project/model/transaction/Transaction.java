@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.TemporalType;
@@ -19,6 +20,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
@@ -38,7 +40,7 @@ public class Transaction {
     private Date customDate;
 
     @Column(name = "AMOUNT", nullable = false)
-    private Float amount;
+    private BigDecimal amount;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "WALLET_ID", referencedColumnName = "ID")

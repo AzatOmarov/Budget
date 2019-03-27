@@ -24,7 +24,7 @@ create table CATEGORY_TYPE
 create table CATEGORY
 (
   ID            bigint      not null auto_increment,
-  CATEGORY_TYPE bigint      not null,
+  CATEGORY_TYPE integer     not null,
   NAME          varchar(50) not null,
   primary key (ID)
 );
@@ -47,8 +47,6 @@ alter table CATEGORY
   add constraint CATEGORY_NAME unique (NAME);
 alter table WALLET
   add constraint WALLET_USER_ID_USER_ID foreign key (USER_ID) references USER (ID) ON DELETE CASCADE;
-alter table CATEGORY
-  add constraint CATEGORY_CATEGORY_TYPE_CATEGORY_TYPE foreign key (CATEGORY_TYPE) references CATEGORY_TYPE (ID) ON DELETE CASCADE;
 alter table TRANSACTION
   add constraint TRANSACTION_WALLET_ID_WALLET_ID foreign key (WALLET_ID) references WALLET (ID) ON DELETE CASCADE;
 alter table TRANSACTION
