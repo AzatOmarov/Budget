@@ -16,14 +16,14 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     @Transactional
     @Modifying
     @Query(value = "insert into transaction (CUSTOM_DATE, AMOUNT, WALLET_ID, CATEGORY_ID, DESCRIPTION, CREATED_DATE, UPDATED_DATE) " +
-            "values (:customDate, :amount, :walletId, :categoryId, :description)", nativeQuery = true)
+            "values (:customDate, :amount, :walletId, :categoryId, :description, :createdDate, :updatedDate)", nativeQuery = true)
     void insertTransaction(@Param("customDate") Date customDate,
                            @Param("amount") BigDecimal amount,
                            @Param("walletId") Long walletId,
                            @Param("categoryId") Long categoryId,
                            @Param("description") String description,
-                           @Param("customDate") Date createdDate,
-                           @Param("customDate") Date updatedDate);
+                           @Param("createdDate") Date createdDate,
+                           @Param("updatedDate") Date updatedDate);
 
     Transaction getTransactionById(Long id);
 
