@@ -2,7 +2,7 @@ package de.budget.project.controller;
 
 import de.budget.project.model.user.User;
 import de.budget.project.model.user.UserWebRequest;
-import de.budget.project.model.user.UserWebResponse;
+import de.budget.project.model.user.UserWebDto;
 import de.budget.project.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +34,13 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public UserWebResponse getUserById(@PathVariable("id") Long id) {
-        return convertToWebResponse(userService.getUserById(id));
+    public UserWebDto getUserById(@PathVariable("id") Long id) {
+        return convertToWebDto(userService.getUserById(id));
     }
 
-    @GetMapping("/users/email/{email}")
-    public UserWebResponse findUserByEmail(@PathVariable("email") String email) {
-        return convertToWebResponse(userService.getUserByEmail(email));
+    @GetMapping("/users?email={email}")
+    public UserWebDto findUserByEmail(@PathVariable("email") String email) {
+        return convertToWebDto(userService.getUserByEmail(email));
     }
 
     private User convertToEntity(UserWebRequest userWebRequest) {
@@ -51,7 +51,7 @@ public class UserController {
         return modelMapper.map(user, UserWebRequest.class);
     }
 
-    private UserWebResponse convertToWebResponse(User user) {
-        return modelMapper.map(user, UserWebResponse.class);
+    private UserWebDto convertToWebDto(User user) {
+        return modelMapper.map(user, UserWebDto.class);
     }
 }

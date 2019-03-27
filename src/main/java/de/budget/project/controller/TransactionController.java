@@ -2,7 +2,7 @@ package de.budget.project.controller;
 
 import de.budget.project.model.transaction.Transaction;
 import de.budget.project.model.transaction.TransactionWebRequest;
-import de.budget.project.model.transaction.TransactionWebResponse;
+import de.budget.project.model.transaction.TransactionWebDto;
 import de.budget.project.services.TransactionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,29 +41,29 @@ public class TransactionController {
     }
 
     @GetMapping("/transactions/{id}")
-    public TransactionWebResponse getTransactionById(@PathVariable("id") Long id) {
-        return convertToWebResponse(transactionService.getTransactionById(id));
+    public TransactionWebDto getTransactionById(@PathVariable("id") Long id) {
+        return convertToWebDto(transactionService.getTransactionById(id));
     }
 
-    @GetMapping("/transactions/wallet/{id}")
-    public List<TransactionWebResponse> getTransactionsByWalletId(@PathVariable("id") Long walletId) {
+    @GetMapping("/transactions?wallet={id}")
+    public List<TransactionWebDto> getTransactionsByWalletId(@PathVariable("id") Long walletId) {
         List<Transaction> transactions = transactionService.getTransactionsByWalletId(walletId);
-        return convertToListWebResponse(transactions);
+        return convertToListWebDto(transactions);
     }
 
-    private TransactionWebResponse convertToWebResponse(Transaction transaction) {
-        TransactionWebResponse transactionWebResponse = new TransactionWebResponse();
-        transactionWebResponse.setAmount(transaction.getAmount());
-        transactionWebResponse.setCategoryName(transaction.getCategory().getName());
-        transactionWebResponse.setDescription(transaction.getDescription());
-        transactionWebResponse.setBalance(transactionService.recalculateBalance(transaction.getWallet().getId()));
-        return transactionWebResponse;
+    private TransactionWebDto convertToWebDto(Transaction transaction) {
+        TransactionWebDto transactionWebDto = new TransactionWebDto();
+        transactionWebDto.setAmount(transaction.getAmount());
+        transactionWebDto.setCategoryName(transaction.getCategory().getName());
+        transactionWebDto.setDescription(transaction.getDescription());
+        transactionWebDto.setBalance(transactionService.recalculateBalance(transaction.getWallet().getId()));
+        return transactionWebDto;
     }
 
-    private List<TransactionWebResponse> convertToListWebResponse(List<Transaction> transactions) {
+    private List<TransactionWebDto> convertToListWebDto(List<Transaction> transactions) {
         return transactions
                 .stream()
-                .map(this::convertToWebResponse)
+                .map(this::convertToWebDto)
                 .collect(Collectors.toList());
     }
 }

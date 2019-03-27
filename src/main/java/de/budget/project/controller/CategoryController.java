@@ -37,7 +37,7 @@ public class CategoryController {
         return convertToDto(categoryService.getCategoryById(id));
     }
 
-    @GetMapping("/categories/type/{type}")
+    @GetMapping("/categories?type={type}")
     public List<CategoryWebDto> getAllByCategoryType(@PathVariable CategoryType type) {
         List<Category> categories = categoryService.getAllByCategoryType(type);
         return categories

@@ -15,12 +15,6 @@ create table WALLET
   CURRENCY varchar(50) not null,
   primary key (ID)
 );
-create table CATEGORY_TYPE
-(
-  ID   bigint not null auto_increment,
-  NAME varchar(50),
-  primary key (ID)
-);
 create table CATEGORY
 (
   ID            bigint      not null auto_increment,

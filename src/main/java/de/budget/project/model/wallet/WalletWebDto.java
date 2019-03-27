@@ -3,7 +3,7 @@ package de.budget.project.model.wallet;
 import lombok.Data;
 
 @Data
-public class WalletWebResponse {
+public class WalletWebDto {
     private Long walletId;
     private String currency;
 }

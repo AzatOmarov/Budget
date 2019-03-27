@@ -2,7 +2,7 @@ package de.budget.project.controller;
 
 import de.budget.project.model.wallet.Wallet;
 import de.budget.project.model.wallet.WalletWebRequest;
-import de.budget.project.model.wallet.WalletWebResponse;
+import de.budget.project.model.wallet.WalletWebDto;
 import de.budget.project.services.WalletService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,24 +37,24 @@ public class WalletController {
     }
 
     @GetMapping("/wallets/{id}")
-    public WalletWebResponse getWalletById(@PathVariable("id") Long id) {
-        return convertToWebResponse(walletService.getWalletById(id));
+    public WalletWebDto getWalletById(@PathVariable("id") Long id) {
+        return convertToWebDto(walletService.getWalletById(id));
     }
 
-    @GetMapping("/wallets/user/{id}")
-    public List<WalletWebResponse> getWalletByUserId(@PathVariable("id") Long userId) {
+    @GetMapping("/wallets?user={id}")
+    public List<WalletWebDto> getWalletByUserId(@PathVariable("id") Long userId) {
         List<Wallet> wallets = walletService.getAllByUserId(userId);
-        return convertToListWebResponse(wallets);
+        return convertToListWebDto(wallets);
     }
 
-    private WalletWebResponse convertToWebResponse(Wallet wallet) {
-        return modelMapper.map(wallet, WalletWebResponse.class);
+    private WalletWebDto convertToWebDto(Wallet wallet) {
+        return modelMapper.map(wallet, WalletWebDto.class);
     }
 
-    private List<WalletWebResponse> convertToListWebResponse(List<Wallet> wallets) {
+    private List<WalletWebDto> convertToListWebDto(List<Wallet> wallets) {
         return wallets
                 .stream()
-                .map(this::convertToWebResponse)
+                .map(this::convertToWebDto)
                 .collect(Collectors.toList());
     }
 }

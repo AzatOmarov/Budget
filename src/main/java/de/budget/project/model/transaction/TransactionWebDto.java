@@ -5,7 +5,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class TransactionWebResponse {
+public class TransactionWebDto {
     private BigDecimal amount;
     private String description;
     private String categoryName;
