@@ -1,5 +1,6 @@
 package de.budget.project.controller;
 
+import de.budget.project.model.currency.Currency;
 import de.budget.project.model.wallet.Wallet;
 import de.budget.project.model.wallet.WalletWebRequest;
 import de.budget.project.model.wallet.WalletWebDto;
@@ -33,7 +34,8 @@ public class WalletController {
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     public void createWallet(@RequestBody WalletWebRequest walletWebRequest) {
-        walletService.insertWallet(walletWebRequest.getUserId(), walletWebRequest.getCurrency());
+        walletService.insertWallet(walletWebRequest.getUserId(),
+                Currency.findCurrencyByName(walletWebRequest.getCurrencyName()).getId());
     }
 
     @GetMapping("/wallets/{id}")
@@ -41,7 +43,7 @@ public class WalletController {
         return convertToWebDto(walletService.getWalletById(id));
     }
 
-    @GetMapping("/wallets?user={id}")
+    @GetMapping("/wallets/user/{id}")
     public List<WalletWebDto> getWalletByUserId(@PathVariable("id") Long userId) {
         List<Wallet> wallets = walletService.getAllByUserId(userId);
         return convertToListWebDto(wallets);

@@ -1,15 +1,18 @@
 package de.budget.project.model.wallet;
 
+import de.budget.project.model.currency.Currency;
+import de.budget.project.model.currency.CurrencyConverter;
 import de.budget.project.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Convert;
+import javax.persistence.JoinColumn;
 import javax.persistence.CascadeType;
-import javax.persistence.ManyToOne;
 import javax.persistence.Column;
 import javax.persistence.GenerationType;
-import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -31,6 +34,6 @@ public class Wallet {
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
     private User user;
 
-    @Column(name = "CURRENCY", nullable = false)
-    private String currency;
+    @Convert(converter = CurrencyConverter.class)
+    private Currency currency;
 }

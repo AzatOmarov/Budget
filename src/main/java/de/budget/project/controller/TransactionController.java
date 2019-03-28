@@ -45,7 +45,7 @@ public class TransactionController {
         return convertToWebDto(transactionService.getTransactionById(id));
     }
 
-    @GetMapping("/transactions?wallet={id}")
+    @GetMapping("/transactions/wallet/{id}")
     public List<TransactionWebDto> getTransactionsByWalletId(@PathVariable("id") Long walletId) {
         List<Transaction> transactions = transactionService.getTransactionsByWalletId(walletId);
         return convertToListWebDto(transactions);

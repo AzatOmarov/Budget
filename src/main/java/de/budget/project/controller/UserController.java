@@ -38,7 +38,7 @@ public class UserController {
         return convertToWebDto(userService.getUserById(id));
     }
 
-    @GetMapping("/users?email={email}")
+    @GetMapping("/users/email/{email}")
     public UserWebDto findUserByEmail(@PathVariable("email") String email) {
         return convertToWebDto(userService.getUserByEmail(email));
     }
