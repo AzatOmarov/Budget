@@ -1,6 +1,6 @@
 package de.budget.project.services;
 
-import de.budget.project.model.user.User;
+import de.budget.project.model.entites.User;
 
 public interface UserService {
 

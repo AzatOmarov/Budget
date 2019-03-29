@@ -62,11 +62,6 @@
             <artifactId>spring-hateoas</artifactId>
             <version>0.25.0.RELEASE</version>
         </dependency>
-        <dependency>
-            <groupId>org.joda</groupId>
-            <artifactId>joda-money</artifactId>
-            <version>1.0.1</version>
-        </dependency>
     </dependencies>
 
     <build>

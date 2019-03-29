@@ -1,4 +1,4 @@
-package de.budget.project.model.categoryType;
+package de.budget.project.model.types;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

@@ -1,6 +1,6 @@
 package de.budget.project.services.impl;
 
-import de.budget.project.model.wallet.Wallet;
+import de.budget.project.model.entites.Wallet;
 import de.budget.project.repository.WalletRepository;
 import de.budget.project.services.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;

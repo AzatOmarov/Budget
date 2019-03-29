@@ -1,17 +1,16 @@
-package de.budget.project.model.currency;
+package de.budget.project.model.types;
 
 import java.util.Arrays;
 import java.util.Optional;
 
-public enum Currency {
-    USD(1, "USD"),
-    EUR(2, "EUR"),
-    RUR(3, "RUR");
+public enum CategoryType {
+    DEBIT(1, "DEBIT"),
+    CREDIT(2, "CREDIT");
 
     private Integer id;
     private String name;
 
-    Currency(Integer id, String name) {
+    CategoryType(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -32,25 +31,25 @@ public enum Currency {
         return name;
     }
 
-    public static Currency findCurrencyById(Integer id) {
+    public static CategoryType findCategoryTypeId(Integer id) {
         if (id == null) {
             throw new IllegalArgumentException("Id cannot be null");
         }
-        Optional<Currency> currency = Arrays
-                .stream(Currency.values())
+        Optional<CategoryType> categoryType = Arrays
+                .stream(CategoryType.values())
                 .filter(k -> k.getId().equals(id))
                 .findFirst();
-        return currency.orElseThrow(() -> new IllegalArgumentException("Id cannot be null"));
+        return categoryType.orElseThrow(() -> new IllegalArgumentException("Id cannot be null"));
     }
 
-    public static Currency findCurrencyByName(String name) {
+    public static CategoryType findCategoryTypeName(String name) {
         if (name == null) {
             throw new IllegalArgumentException("Name cannot be null");
         }
-        Optional<Currency> currency = Arrays
-                .stream(Currency.values())
+        Optional<CategoryType> categoryType = Arrays
+                .stream(CategoryType.values())
                 .filter(k -> k.getName().equals(name))
                 .findFirst();
-        return currency.orElseThrow(() -> new IllegalArgumentException("Name cannot be null"));
+        return categoryType.orElseThrow(() -> new IllegalArgumentException("Name cannot be null"));
     }
 }

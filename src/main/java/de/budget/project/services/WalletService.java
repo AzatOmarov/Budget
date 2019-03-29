@@ -1,6 +1,6 @@
 package de.budget.project.services;
 
-import de.budget.project.model.wallet.Wallet;
+import de.budget.project.model.entites.Wallet;
 
 import java.util.List;
 

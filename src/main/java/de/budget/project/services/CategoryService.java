@@ -1,7 +1,7 @@
 package de.budget.project.services;
 
-import de.budget.project.model.category.Category;
-import de.budget.project.model.categoryType.CategoryType;
+import de.budget.project.model.entites.Category;
+import de.budget.project.model.types.CategoryType;
 
 import java.util.List;
 

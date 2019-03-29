@@ -1,6 +1,6 @@
 package de.budget.project.repository;
 
-import de.budget.project.model.wallet.Wallet;
+import de.budget.project.model.entites.Wallet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

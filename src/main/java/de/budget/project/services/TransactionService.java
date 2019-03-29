@@ -1,6 +1,6 @@
 package de.budget.project.services;
 
-import de.budget.project.model.transaction.Transaction;
+import de.budget.project.model.entites.Transaction;
 
 import java.math.BigDecimal;
 import java.util.Date;

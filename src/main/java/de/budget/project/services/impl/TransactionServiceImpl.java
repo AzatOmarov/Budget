@@ -1,7 +1,7 @@
 package de.budget.project.services.impl;
 
-import de.budget.project.model.categoryType.CategoryType;
-import de.budget.project.model.transaction.Transaction;
+import de.budget.project.model.entites.Transaction;
+import de.budget.project.model.types.CategoryType;
 import de.budget.project.repository.TransactionRepository;
 import de.budget.project.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;

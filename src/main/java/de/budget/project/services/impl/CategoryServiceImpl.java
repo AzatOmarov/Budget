@@ -1,7 +1,7 @@
 package de.budget.project.services.impl;
 
-import de.budget.project.model.category.Category;
-import de.budget.project.model.categoryType.CategoryType;
+import de.budget.project.model.entites.Category;
+import de.budget.project.model.types.CategoryType;
 import de.budget.project.repository.CategoryRepository;
 import de.budget.project.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;

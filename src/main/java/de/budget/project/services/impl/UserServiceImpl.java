@@ -1,6 +1,6 @@
 package de.budget.project.services.impl;
 
-import de.budget.project.model.user.User;
+import de.budget.project.model.entites.User;
 import de.budget.project.repository.UserRepository;
 import de.budget.project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

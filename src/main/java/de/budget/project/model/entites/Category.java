@@ -1,18 +1,12 @@
-package de.budget.project.model.category;
+package de.budget.project.model.entites;
 
-import de.budget.project.model.categoryType.CategoryType;
-import de.budget.project.model.categoryType.CategoryTypeConverter;
+import de.budget.project.model.types.CategoryType;
+import de.budget.project.model.types.CategoryTypeConverter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Convert;
-import javax.persistence.GenerationType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -29,6 +23,7 @@ public class Category {
     @Column(name = "NAME", nullable = false, length = 50, unique = true)
     private String name;
 
+    @Column(name = "CATEGORY_TYPE")
     @Convert(converter = CategoryTypeConverter.class)
     private CategoryType categoryType;
 }

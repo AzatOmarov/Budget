@@ -1,6 +1,6 @@
-package de.budget.project.model.category;
+package de.budget.project.model.web;
 
-import de.budget.project.model.categoryType.CategoryType;
+import de.budget.project.model.types.CategoryType;
 import lombok.Data;
 
 @Data

@@ -1,11 +1,11 @@
-package de.budget.project.model.transaction;
+package de.budget.project.model.web;
 
 import lombok.Data;
 
 import java.math.BigDecimal;
 
 @Data
-public class TransactionWebDto {
+public class TransactionWebResponse {
     private BigDecimal amount;
     private String description;
     private String categoryName;

@@ -12,7 +12,7 @@ create table WALLET
 (
   ID       bigint      not null auto_increment,
   USER_ID  bigint,
-  CURRENCY integer not null,
+  CURRENCY_TYPE integer not null,
   primary key (ID)
 );
 create table CATEGORY

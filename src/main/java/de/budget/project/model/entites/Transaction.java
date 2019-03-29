@@ -1,24 +1,12 @@
-package de.budget.project.model.transaction;
+package de.budget.project.model.entites;
 
-import de.budget.project.model.category.Category;
-import de.budget.project.model.wallet.Wallet;
-import lombok.Data;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.TemporalType;
-import javax.persistence.Column;
-import javax.persistence.Temporal;
-import javax.persistence.CascadeType;
-import javax.persistence.GenerationType;
-import javax.persistence.ManyToOne;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 

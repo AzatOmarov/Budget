@@ -1,4 +1,4 @@
-package de.budget.project.model.user;
+package de.budget.project.model.web;
 
 import lombok.Data;
 
