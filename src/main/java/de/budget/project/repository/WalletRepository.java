@@ -13,7 +13,7 @@ public interface WalletRepository extends JpaRepository<Wallet, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "insert into wallet (USER_ID, CURRENCY) values (:userId, :currencyId)", nativeQuery = true)
+    @Query(value = "insert into wallet (USER_ID, CURRENCY_TYPE) values (:userId, :currencyId)", nativeQuery = true)
     void insertWallet(@Param("userId") Long userId, @Param("currencyId") Integer currencyId);
 
     Wallet getWalletById(Long id);
