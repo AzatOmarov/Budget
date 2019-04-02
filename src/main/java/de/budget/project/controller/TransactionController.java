@@ -25,8 +25,8 @@ public class TransactionController {
     @PostMapping("/transactions")
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
-    public void createTransaction(@RequestBody TransactionWebRequest transactionWebRequest) {
-        transactionService.insertTransaction(transactionWebRequest.getCustomDate(),
+    public Long createTransaction(@RequestBody TransactionWebRequest transactionWebRequest) {
+        return transactionService.createTransaction(transactionWebRequest.getCustomDate(),
                 transactionWebRequest.getAmount(),
                 transactionWebRequest.getWalletId(),
                 transactionWebRequest.getCategoryId(),

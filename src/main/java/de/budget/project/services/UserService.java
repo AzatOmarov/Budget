@@ -1,12 +1,13 @@
 package de.budget.project.services;
 
 import de.budget.project.model.entites.User;
+import de.budget.project.model.web.UserWebResponse;
 
 public interface UserService {
 
-    User createUser(User user);
+    Long createUser(User user);
 
-    User getUserById(Long id);
+    UserWebResponse getUserById(Long id);
 
     User getUserByEmail(String email);
 }

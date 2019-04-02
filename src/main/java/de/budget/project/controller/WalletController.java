@@ -26,15 +26,16 @@ public class WalletController {
     @PostMapping("/wallets")
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
-    public void createWallet(@RequestBody WalletWebRequest walletWebRequest) {
-        walletService.insertWallet(walletWebRequest.getUserId(),
+    public Long createWallet(@RequestBody WalletWebRequest walletWebRequest) {
+        return walletService.createWallet(walletWebRequest.getUserId(),
                 CurrencyType.findCurrencyByName(walletWebRequest.getCurrencyName()).getId());
+
     }
 
     @GetMapping("/wallets/{id}")
     @ResponseBody
     public WalletWebResponse getWalletById(@PathVariable("id") Long id) {
-        return convertToWebResponse(walletService.getWalletById(id));
+        return walletService.getWalletById(id);
     }
 
     @GetMapping("/wallets/user/{id}")

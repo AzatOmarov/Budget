@@ -1,5 +1,6 @@
 package de.budget.project.model.web;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.math.BigDecimal;

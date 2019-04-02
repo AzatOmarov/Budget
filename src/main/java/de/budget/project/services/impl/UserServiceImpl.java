@@ -1,6 +1,7 @@
 package de.budget.project.services.impl;
 
 import de.budget.project.model.entites.User;
+import de.budget.project.model.web.UserWebResponse;
 import de.budget.project.repository.UserRepository;
 import de.budget.project.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,12 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public Long createUser(User user) {
+        userRepository.save(user);
+        return user.getId();
     }
 
-    @Override
-    public User getUserById(Long id) {
+    public UserWebResponse getUserById(Long id) {
         return userRepository.getUserById(id);
     }
 

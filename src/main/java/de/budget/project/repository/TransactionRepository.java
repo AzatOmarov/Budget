@@ -15,7 +15,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     @Transactional
     @Modifying
-    @Query(value = "insert into transaction (CUSTOM_DATE, AMOUNT, WALLET_ID, CATEGORY_ID, DESCRIPTION, CREATED_DATE, UPDATED_DATE) " +
+    @Query(value = "insert into TRANSACTION (CUSTOM_DATE, AMOUNT, WALLET_ID, CATEGORY_ID, DESCRIPTION, CREATED_DATE, UPDATED_DATE) " +
             "values (:customDate, :amount, :walletId, :categoryId, :description, :createdDate, :updatedDate)", nativeQuery = true)
     void insertTransaction(@Param("customDate") Date customDate,
                            @Param("amount") BigDecimal amount,
@@ -24,6 +24,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
                            @Param("description") String description,
                            @Param("createdDate") Date createdDate,
                            @Param("updatedDate") Date updatedDate);
+
+    @Query(value = "SELECT * FROM TRANSACTION WHERE ID = (SELECT COUNT(ID) FROM TRANSACTION)", nativeQuery = true)
+    Long getLastTransaction();
 
     Transaction getTransactionById(Long id);
 

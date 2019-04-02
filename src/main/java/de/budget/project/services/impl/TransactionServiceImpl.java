@@ -18,13 +18,14 @@ public class TransactionServiceImpl implements TransactionService {
     TransactionRepository transactionRepository;
 
     @Override
-    public void insertTransaction(Date customDate,
+    public Long createTransaction(Date customDate,
                                   BigDecimal amount,
                                   Long walletId,
                                   Long categoryId,
                                   String description) {
         Date date = new Date();
         transactionRepository.insertTransaction(customDate, amount, walletId, categoryId, description, date, date);
+        return transactionRepository.getLastTransaction();
     }
 
     @Override

@@ -41,7 +41,7 @@ alter table CATEGORY
   add constraint CATEGORY_NAME unique (NAME);
 alter table WALLET
   add constraint WALLET_USER_ID_USER_ID foreign key (USER_ID) references USER (ID) ON DELETE CASCADE;
-alter table TRANSACTION
-  add constraint TRANSACTION_WALLET_ID_WALLET_ID foreign key (WALLET_ID) references WALLET (ID) ON DELETE CASCADE;
+# alter table TRANSACTION
+#    add constraint TRANSACTION_WALLET_ID_WALLET_ID foreign key (WALLET_ID) references WALLET (ID) ON DELETE CASCADE;
 alter table TRANSACTION
   add constraint TRANSACTION_CATEGORY_ID_CATEGORY_ID foreign key (CATEGORY_ID) references CATEGORY (ID) ON DELETE CASCADE;

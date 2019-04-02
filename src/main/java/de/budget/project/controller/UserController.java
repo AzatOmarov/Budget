@@ -22,18 +22,18 @@ public class UserController {
     @PostMapping("/users")
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
-    public UserWebResponse createUser(@RequestBody UserWebRequest userWebRequest) {
-        return convertToWebResponse(userService.createUser(convertToEntity(userWebRequest)));
+    public Long createUser(@RequestBody UserWebRequest userWebRequest) {
+        return userService.createUser(convertToEntity(userWebRequest));
     }
 
     @GetMapping("/users/{id}")
     @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
     public UserWebResponse getUserById(@PathVariable("id") Long id) {
-        return convertToWebResponse(userService.getUserById(id));
+        return userService.getUserById(id);
     }
 
     @GetMapping("/users/email/{email}")
-    @ResponseBody
     public UserWebResponse findUserByEmail(@PathVariable("email") String email) {
         return convertToWebResponse(userService.getUserByEmail(email));
     }

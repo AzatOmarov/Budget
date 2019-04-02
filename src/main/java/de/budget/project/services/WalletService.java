@@ -1,14 +1,15 @@
 package de.budget.project.services;
 
 import de.budget.project.model.entites.Wallet;
+import de.budget.project.model.web.WalletWebResponse;
 
 import java.util.List;
 
 public interface WalletService {
 
-    void insertWallet(Long userId, Integer currencyId);
+    Long createWallet(Long userId, Integer currencyId);
 
-    Wallet getWalletById(Long id);
+    WalletWebResponse getWalletById(Long id);
 
     List<Wallet> getAllByUserId(Long userId);
 }

@@ -1,6 +1,7 @@
 package de.budget.project.services.impl;
 
 import de.budget.project.model.entites.Wallet;
+import de.budget.project.model.web.WalletWebResponse;
 import de.budget.project.repository.WalletRepository;
 import de.budget.project.services.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,13 @@ public class WalletServiceImpl implements WalletService {
     WalletRepository walletRepository;
 
     @Override
-    public void insertWallet(Long userId, Integer currencyId) {
-        walletRepository.insertWallet(userId, currencyId);
+    public Long createWallet(Long userId, Integer currencyId) {
+        walletRepository.createWallet(userId, currencyId);
+        return walletRepository.getLastWallet();
     }
 
     @Override
-    public Wallet getWalletById(Long id) {
+    public WalletWebResponse getWalletById(Long id) {
         return walletRepository.getWalletById(id);
     }
 
