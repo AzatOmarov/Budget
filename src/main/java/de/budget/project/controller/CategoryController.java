@@ -53,7 +53,7 @@ public class CategoryController {
             categoryWebDto.setName("is null");
         }
         category.setName(categoryWebDto.getName());
-        category.setCategoryType(CategoryType.findCategoryTypeName(categoryWebDto.getCategoryTypeName()));
+        category.setCategoryType(CategoryType.findCategoryTypeId(categoryWebDto.getCategoryTypeId()));
         return category;
     }
 }

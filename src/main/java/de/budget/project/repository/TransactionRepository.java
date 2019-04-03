@@ -1,17 +1,21 @@
 package de.budget.project.repository;
 
+import de.budget.project.model.dao.TransactionDAO;
 import de.budget.project.model.entites.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-public interface TransactionRepository extends JpaRepository<Transaction, Long> {
+public interface TransactionRepository extends JpaRepository<Transaction, Long>, TransactionRepositoryCustom {
 
     @Transactional
     @Modifying
@@ -31,4 +35,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     Transaction getTransactionById(Long id);
 
     List<Transaction> getTransactionsByWalletId(Long walletId);
+
+    @Query("SELECT new de.budget.project.model.dao.TransactionDAO" +
+            "(t.id, t.customDate, t.amount, w.id, w.user.id, t.category.id, t.description )" +
+           "FROM Transaction t JOIN t.wallet w WHERE t.wallet.id = w.id AND t.wallet.user.id = :id")
+     List<TransactionDAO> getTransactionsByUserId(@Param("id") Long id);
 }

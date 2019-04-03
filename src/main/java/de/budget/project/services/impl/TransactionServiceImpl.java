@@ -1,5 +1,6 @@
 package de.budget.project.services.impl;
 
+import de.budget.project.model.dao.TransactionDAO;
 import de.budget.project.model.entites.Transaction;
 import de.budget.project.model.types.CategoryType;
 import de.budget.project.repository.TransactionRepository;
@@ -39,12 +40,16 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    public List<TransactionDAO> getTransactionsByUserId(Long userId) {
+        return transactionRepository.getTransactionsByUserId(userId);
+    }
+
+    @Override
     public BigDecimal recalculateBalance(Long walletId) {
         List<Transaction> allTransactions = transactionRepository.getTransactionsByWalletId(walletId);
         BigDecimal debitSum = allTransactions
                 .stream()
-                .filter(p -> p.getCategory()
-                        .getCategoryType()
+                .filter(p -> p.getCategory().getCategoryType()
                         .equals(CategoryType.DEBIT))
                 .map(Transaction::getAmount)
                 .reduce(BigDecimal::add)
@@ -52,8 +57,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         BigDecimal creditSum = allTransactions
                 .stream()
-                .filter(p -> p.getCategory()
-                        .getCategoryType()
+                .filter(p -> p.getCategory().getCategoryType()
                         .equals(CategoryType.CREDIT))
                 .map(Transaction::getAmount)
                 .reduce(BigDecimal::add)

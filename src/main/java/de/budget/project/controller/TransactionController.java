@@ -1,5 +1,6 @@
 package de.budget.project.controller;
 
+import de.budget.project.model.dao.TransactionDAO;
 import de.budget.project.model.entites.Transaction;
 import de.budget.project.model.web.TransactionWebRequest;
 import de.budget.project.model.web.TransactionWebResponse;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,6 +46,12 @@ public class TransactionController {
     public List<TransactionWebResponse> getTransactionsByWalletId(@PathVariable("id") Long walletId) {
         List<Transaction> transactions = transactionService.getTransactionsByWalletId(walletId);
         return convertToListWebResponse(transactions);
+    }
+
+    @GetMapping("/transactions/user/{id}")
+    @ResponseBody
+    private List<TransactionDAO> getTransactionsByUserId(@PathVariable("id") Long id){
+        return transactionService.getTransactionsByUserId(id);
     }
 
     private TransactionWebResponse convertToWebResponse(Transaction transaction) {

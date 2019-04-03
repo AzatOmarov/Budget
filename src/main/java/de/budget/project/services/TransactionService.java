@@ -1,5 +1,6 @@
 package de.budget.project.services;
 
+import de.budget.project.model.dao.TransactionDAO;
 import de.budget.project.model.entites.Transaction;
 
 import java.math.BigDecimal;
@@ -17,6 +18,8 @@ public interface TransactionService {
     Transaction getTransactionById(Long id);
 
     List<Transaction> getTransactionsByWalletId(Long walletId);
+
+    List<TransactionDAO> getTransactionsByUserId(Long userId);
 
     BigDecimal recalculateBalance(Long walletId);
 }
