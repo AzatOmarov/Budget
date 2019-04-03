@@ -5,4 +5,5 @@
 
 ### UML Scheme
 - ./uml/UML Scheme.png
+- ./uml/db_budget.uml (IDE IntelliJ IDEA)
 - ./uml/UML Scheme.xml (https://www.draw.io/)
