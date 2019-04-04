@@ -5,21 +5,16 @@ import de.budget.project.model.entites.Transaction;
 import de.budget.project.model.web.TransactionWebRequest;
 import de.budget.project.model.web.TransactionWebResponse;
 import de.budget.project.services.TransactionService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
 public class TransactionController {
-
-    @Autowired
-    ModelMapper modelMapper;
 
     @Autowired
     TransactionService transactionService;
@@ -50,7 +45,7 @@ public class TransactionController {
 
     @GetMapping("/transactions/user/{id}")
     @ResponseBody
-    private List<TransactionDAO> getTransactionsByUserId(@PathVariable("id") Long id){
+    public List<TransactionDAO> getTransactionsByUserId(@PathVariable("id") Long id) {
         return transactionService.getTransactionsByUserId(id);
     }
 

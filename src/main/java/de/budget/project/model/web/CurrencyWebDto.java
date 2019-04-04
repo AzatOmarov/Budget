@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserWebResponse {
+public class CurrencyWebDto {
+    private Long id;
     private String name;
-    private String email;
+    private String description;
 }

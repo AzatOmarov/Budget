@@ -1,15 +1,13 @@
 package de.budget.project.model.web;
 
-import de.budget.project.model.types.CategoryType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CategoryWebDto {
     private String name;
     private Integer categoryTypeId;
-
-    public CategoryWebDto(String name, CategoryType categoryType) {
-        this.name = name;
-        this.categoryTypeId = categoryType.getId();
-    }
 }

@@ -3,14 +3,11 @@ package de.budget.project.controller;
 import de.budget.project.model.entites.User;
 import de.budget.project.model.web.UserWebRequest;
 import de.budget.project.model.web.UserWebResponse;
-import de.budget.project.repository.UserRepository;
 import de.budget.project.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -21,9 +18,6 @@ public class UserController {
 
     @Autowired
     UserService userService;
-
-    @Autowired
-    UserRepository userRepository;
 
     @PostMapping("/users")
     @ResponseBody
@@ -40,7 +34,8 @@ public class UserController {
     }
 
     @GetMapping("/users/email/{email}")
-    public UserWebResponse findUserByEmail(@PathVariable("email") String email) {
+    @ResponseBody
+    public UserWebResponse getUserByEmail(@PathVariable("email") String email) {
         return convertToWebResponse(userService.getUserByEmail(email));
     }
 

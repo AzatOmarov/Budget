@@ -42,16 +42,11 @@ public class CategoryController {
     }
 
     private CategoryWebDto convertToDto(Category category) {
-        return new CategoryWebDto(category.getName(), category.getCategoryType());
+        return new CategoryWebDto(category.getName(), category.getCategoryType().getId());
     }
 
     private Category convertToEntity(CategoryWebDto categoryWebDto) {
         Category category = new Category();
-
-        //TODO delete this after adding list of types to CATEGORY entity
-        if (categoryWebDto.getName() == null) {
-            categoryWebDto.setName("is null");
-        }
         category.setName(categoryWebDto.getName());
         category.setCategoryType(CategoryType.findCategoryTypeId(categoryWebDto.getCategoryTypeId()));
         return category;

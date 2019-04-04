@@ -7,9 +7,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -29,15 +26,15 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
                            @Param("createdDate") Date createdDate,
                            @Param("updatedDate") Date updatedDate);
 
-    @Query(value = "SELECT * FROM TRANSACTION WHERE ID = (SELECT COUNT(ID) FROM TRANSACTION)", nativeQuery = true)
-    Long getLastTransaction();
-
     Transaction getTransactionById(Long id);
 
     List<Transaction> getTransactionsByWalletId(Long walletId);
 
     @Query("SELECT new de.budget.project.model.dao.TransactionDAO" +
-            "(t.id, t.customDate, t.amount, w.id, w.user.id, t.category.id, t.description )" +
-           "FROM Transaction t JOIN t.wallet w WHERE t.wallet.id = w.id AND t.wallet.user.id = :id")
-     List<TransactionDAO> getTransactionsByUserId(@Param("id") Long id);
+            "(t.id, t.customDate, t.amount, w.id, t.category.id, t.description, t.createdDate, t.updatedDate )" +
+            "FROM Transaction t JOIN t.wallet w WHERE t.wallet.id = w.id AND t.wallet.user.id = :id")
+    List<TransactionDAO> getTransactionsByUserId(@Param("id") Long id);
+
+    @Query(value = "SELECT * FROM TRANSACTION WHERE ID = (SELECT COUNT(ID) FROM TRANSACTION)", nativeQuery = true)
+    Long getLastTransaction();
 }
