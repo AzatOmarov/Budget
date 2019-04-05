@@ -1,5 +1,6 @@
-package de.budget.project.repository;
+package de.budget.project.repository.impl;
 
+import de.budget.project.repository.TransactionRepositoryCustom;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -10,5 +11,4 @@ public class TransactionRepositoryCustomImpl implements TransactionRepositoryCus
 
     @PersistenceContext
     private EntityManager entityManager;
-
 }

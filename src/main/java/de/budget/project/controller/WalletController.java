@@ -29,7 +29,6 @@ public class WalletController {
     public Long createWallet(@RequestBody WalletWebRequest walletWebRequest) {
         return walletService.createWallet(walletWebRequest.getUserId(),
                 CurrencyType.findCurrencyByName(walletWebRequest.getCurrencyName()).getId());
-
     }
 
     @GetMapping("/wallets/{id}")
@@ -40,8 +39,8 @@ public class WalletController {
 
     @GetMapping("/wallets/user/{id}")
     @ResponseBody
-    public List<WalletWebResponse> getWalletByUserId(@PathVariable("id") Long userId) {
-        List<Wallet> wallets = walletService.getAllByUserId(userId);
+    public List<WalletWebResponse> getWalletsByUserId(@PathVariable("id") Long userId) {
+        List<Wallet> wallets = walletService.getWalletsByUserId(userId);
         return convertToListWebResponse(wallets);
     }
 

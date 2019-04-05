@@ -1,6 +1,5 @@
 package de.budget.project.model.dao;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -14,7 +13,6 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 public class TransactionDAO {
-
     private Long id;
     private Date date;
     private BigDecimal amount;
@@ -23,5 +21,4 @@ public class TransactionDAO {
     private String description;
     private Date createdDate;
     private Date updatedDate;
-
 }

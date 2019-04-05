@@ -42,13 +42,13 @@ public class CategoryController {
     }
 
     private CategoryWebDto convertToDto(Category category) {
-        return new CategoryWebDto(category.getName(), category.getCategoryType());
+        return new CategoryWebDto(category.getName(), category.getCategoryType().getId());
     }
 
     private Category convertToEntity(CategoryWebDto categoryWebDto) {
         Category category = new Category();
         category.setName(categoryWebDto.getName());
-        category.setCategoryType(categoryWebDto.getCategoryTypeId());
+        category.setCategoryType(CategoryType.findCategoryTypeId(categoryWebDto.getCategoryTypeId()));
         return category;
     }
 }

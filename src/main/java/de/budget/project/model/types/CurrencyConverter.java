@@ -15,5 +15,4 @@ public class CurrencyConverter implements AttributeConverter<CurrencyType, Integ
     public CurrencyType convertToEntityAttribute(Integer dbData) {
         return dbData == null ? null : CurrencyType.findCurrencyById(dbData);
     }
-
 }

@@ -12,18 +12,18 @@ import java.util.List;
 
 public interface WalletRepository extends JpaRepository<Wallet, Long> {
 
+    @Transactional
+    @Modifying
+    @Query(value = "insert into WALLET (USER_ID, CURRENCY_TYPE) values (:userId, :currencyId)", nativeQuery = true)
+    void insertWallet(@Param("userId") Long userId, @Param("currencyId") Integer currencyId);
+
     @Query("SELECT new de.budget.project.model.web.WalletWebResponse" +
             " (w.user.id, w.currencyType)" +
             " FROM Wallet w WHERE w.id = :id")
     WalletWebResponse getWalletById(@Param("id") Long id);
 
-    @Transactional
-    @Modifying
-    @Query(value = "insert into WALLET (USER_ID, CURRENCY_TYPE) values (:userId, :currencyId)", nativeQuery = true)
-    void createWallet(@Param("userId") Long userId, @Param("currencyId") Integer currencyId);
+    List<Wallet> getWalletsByUserId(Long userId);
 
     @Query(value = "SELECT * FROM WALLET WHERE ID = (SELECT COUNT(ID) FROM WALLET)", nativeQuery = true)
     Long getLastWallet();
-
-    List<Wallet> getAllByUserId(Long userId);
 }

@@ -11,5 +11,5 @@ public interface WalletService {
 
     WalletWebResponse getWalletById(Long id);
 
-    List<Wallet> getAllByUserId(Long userId);
+    List<Wallet> getWalletsByUserId(Long userId);
 }

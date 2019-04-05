@@ -17,7 +17,7 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public Long createWallet(Long userId, Integer currencyId) {
-        walletRepository.createWallet(userId, currencyId);
+        walletRepository.insertWallet(userId, currencyId);
         return walletRepository.getLastWallet();
     }
 
@@ -27,7 +27,7 @@ public class WalletServiceImpl implements WalletService {
     }
 
     @Override
-    public List<Wallet> getAllByUserId(Long userId) {
-        return walletRepository.getAllByUserId(userId);
+    public List<Wallet> getWalletsByUserId(Long userId) {
+        return walletRepository.getWalletsByUserId(userId);
     }
 }

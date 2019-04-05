@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserWebResponse {
+public class CategoryTypeWebDto {
+    private Long id;
     private String name;
-    private String email;
 }

@@ -4,9 +4,9 @@ import java.util.Arrays;
 import java.util.Optional;
 
 public enum CurrencyType {
-    USD(1, "USD", "US Dollar"),
-    EUR(2, "EUR", "Euro"),
-    RUR(3, "RUR", "Russian Ruble");
+    USD(1, "USD", "United States Dollar"),
+    EUR(2, "EUR", "European Euro"),
+    RUR(3, "RUB", "Russian Ruble");
 
     private Integer id;
     private String name;
@@ -32,6 +32,14 @@ public enum CurrencyType {
 
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public static CurrencyType findCurrencyById(Integer id) {
