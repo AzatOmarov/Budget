@@ -21,7 +21,8 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
     @Modifying
     @Query(value = "insert into TRANSACTION (CUSTOM_DATE, AMOUNT, WALLET_ID, CATEGORY_ID, DESCRIPTION, CREATED_DATE, UPDATED_DATE) " +
             "values (:customDate, :amount, :walletId, :categoryId, :description, :createdDate, :updatedDate)", nativeQuery = true)
-    void insertTransaction(@Param("customDate") Date customDate,
+    void insertTransaction(@Param("customDat" +
+            "e") Date customDate,
                            @Param("amount") BigDecimal amount,
                            @Param("walletId") Long walletId,
                            @Param("categoryId") Long categoryId,
@@ -37,7 +38,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
     List<Transaction> getTransactionsByWalletId(Long walletId);
 
     @Query("SELECT new de.budget.project.model.dao.TransactionDAO" +
-            "(t.id, t.customDate, t.amount, w.id, w.user.id, t.category.id, t.description )" +
+            "(t.id, t.customDate, t.amount, w.id, t.category.id, t.description, t.createdDate, t.updatedDate )" +
            "FROM Transaction t JOIN t.wallet w WHERE t.wallet.id = w.id AND t.wallet.user.id = :id")
      List<TransactionDAO> getTransactionsByUserId(@Param("id") Long id);
 }

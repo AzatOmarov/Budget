@@ -47,13 +47,8 @@ public class CategoryController {
 
     private Category convertToEntity(CategoryWebDto categoryWebDto) {
         Category category = new Category();
-
-        //TODO delete this after adding list of types to CATEGORY entity
-        if (categoryWebDto.getName() == null) {
-            categoryWebDto.setName("is null");
-        }
         category.setName(categoryWebDto.getName());
-        category.setCategoryType(CategoryType.findCategoryTypeId(categoryWebDto.getCategoryTypeId()));
+        category.setCategoryType(categoryWebDto.getCategoryTypeId());
         return category;
     }
 }

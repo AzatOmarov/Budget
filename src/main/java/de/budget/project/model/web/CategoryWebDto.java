@@ -6,10 +6,11 @@ import lombok.Data;
 @Data
 public class CategoryWebDto {
     private String name;
-    private Integer categoryTypeId;
+    private CategoryType categoryTypeId;
 
     public CategoryWebDto(String name, CategoryType categoryType) {
         this.name = name;
-        this.categoryTypeId = categoryType.getId();
+        this.categoryTypeId = CategoryType.findCategoryTypeId(categoryType.getId());
     }
+
 }

@@ -19,8 +19,9 @@ public class TransactionDAO {
     private Date date;
     private BigDecimal amount;
     private Long walletId;
-    private Long userId;
     private Long categoryId;
     private String description;
+    private Date createdDate;
+    private Date updatedDate;
 
 }

@@ -35,10 +35,13 @@ public enum CategoryType {
         if (id == null) {
             throw new IllegalArgumentException("Id cannot be null");
         }
-        Optional<CategoryType> categoryType = Arrays
-                .stream(CategoryType.values())
-                .filter(k -> k.getId().equals(id))
-                .findFirst();
+        Optional<CategoryType> categoryType = Optional.empty();
+        for (CategoryType k : CategoryType.values()) {
+            if (k.getId().equals(id)) {
+                categoryType = Optional.of(k);
+                break;
+            }
+        }
         return categoryType.orElseThrow(() -> new IllegalArgumentException("Id cannot be null"));
     }
 
@@ -52,4 +55,6 @@ public enum CategoryType {
                 .findFirst();
         return categoryType.orElseThrow(() -> new IllegalArgumentException("Name cannot be null"));
     }
+
+
 }
