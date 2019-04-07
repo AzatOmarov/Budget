@@ -1,0 +1,8 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    background: #ffffff url('../resources/background.png') bottom center no-repeat;
+    padding-bottom: 581px;
+}

@@ -23,12 +23,22 @@ module.exports = {
                         loader: 'html-loader'
                     }
                 ]
+            }, {
+                test: /\.svg|png|jpg$/,
+                loader: 'url-loader',
+                exclude: /node_modules/
+            }, {
+                test: /\.s?css$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ]
             }
         ]
     },
     devServer: {
-        historyApiFallback: true,
-        port: 9000
+        historyApiFallback: true
     },
     plugins: [
         new HtmlWebPackPlugin({
