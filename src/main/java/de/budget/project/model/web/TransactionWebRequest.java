@@ -9,7 +9,6 @@ import java.util.Date;
 @Data
 public class TransactionWebRequest {
     @NotNull
-    @NotBlank
     private Date customDate;
 
     @NotNull

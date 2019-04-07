@@ -23,6 +23,6 @@ public class UserWebRequest {
 
     @NotNull
     @Size(max = 50)
-    @Pattern(regexp = ".+@.+\\...+")
+    @Email(regexp = ".+@.+\\...+")
     private String email;
 }
