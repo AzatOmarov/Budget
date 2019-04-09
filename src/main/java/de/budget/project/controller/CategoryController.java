@@ -1,5 +1,6 @@
 package de.budget.project.controller;
 
+import de.budget.project.model.dao.CategoryDAO;
 import de.budget.project.model.entites.Category;
 import de.budget.project.model.types.CategoryType;
 import de.budget.project.model.web.CategoryWebDto;
@@ -50,5 +51,10 @@ public class CategoryController {
         category.setName(categoryWebDto.getName());
         category.setCategoryType(CategoryType.findCategoryTypeId(categoryWebDto.getCategoryTypeId()));
         return category;
+    }
+
+    @GetMapping("/categories")
+    public List<CategoryDAO> getAll(){
+        return categoryService.getAllCategories();
     }
 }
