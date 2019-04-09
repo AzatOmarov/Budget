@@ -1,16 +1,29 @@
 import React, {Component} from 'react';
 import Title from '../../UIComponents/header/title/Title';
 import Slogan from '../../UIComponents/header/slogan/Slogan';
+import Carousel from '../../UIComponents/carousel/Carousel';
 
 class App extends Component {
     render() {
         return (
-            <div className="row">
-                <div className="col-5">
-                    <Title/>
+            <div className="container">
+                <div className="row">
+                    <div className="col-5">
+                        <Title/>
+                    </div>
+                    <div className="col-7">
+                        <Slogan/>
+                    </div>
                 </div>
-                <div className="col-7">
-                    <Slogan/>
+                <div className="frame-div">
+                    <div className="row">
+                        <div className="col-2"/>
+                        <div className="col-8">
+                            <Carousel/>
+                        </div>
+                        <div className="col-2"/>
+                    </div>
+
                 </div>
             </div>
         )

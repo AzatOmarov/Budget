@@ -3,48 +3,24 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div`
     position: relative;
+    padding-top: 5%;
 `;
 
-const Name = styled.p`
-    font-family: Sans-Serif;
+const Text = styled.p`
     font-size: 50px;
     text-align: left;
     color: #5f8420;
+    margin-left:-4px;
 `;
 
 class Title extends Component {
     render() {
         return (
             <Wrapper>
-                <Name>Budget</Name>
+                <Text>Budget</Text>
             </Wrapper>
         )
     }
 }
 
 export default Title;
-
-// const Title = ({className}) => {
-//     return (
-//         <div className={className}>
-//             <div className={"title__position"}>
-//                 <p className={"title__name"}>Budget</p>
-//             </div>
-//         </div>
-//     )
-// };
-//
-// const StyledTitle = styled(Title)`
-//     .title__position{
-//         position: relative;
-//     }
-//
-//     .title__name{
-//         font-family: Sans-Serif;
-//         font-size: 50px;
-//         text-align: left;
-//         color: #5f8420;
-//     }
-// `;
-//
-// export default StyledTitle;

@@ -12,7 +12,7 @@ const hist = createBrowserHistory();
 const router = (
     <Router history={hist}>
         <div>
-            <ul className="nav-fill navbar navbar-light">
+            <ul className="nav justify-content-end">
                 <li className="nav-item nav-link"><Link to="/">App</Link></li>
                 <li className="nav-item nav-link"><Link to="/transactions">Transactions</Link></li>
                 <li className="nav-item nav-link"><Link to="/settings">Settings</Link></li>
