@@ -3,14 +3,14 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div`
     position: relative;
-    padding-top: 5%;
+    margin-top: -20px;
 `;
 
 const Text = styled.p`
     font-size: 50px;
     text-align: left;
     color: #5f8420;
-    margin-left:-4px;
+    margin-left: -4px;
 `;
 
 class Title extends Component {
