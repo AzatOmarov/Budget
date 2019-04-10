@@ -4,7 +4,6 @@ import de.budget.project.model.dto.InitialDataDTO;
 import de.budget.project.services.CategoryService;
 import de.budget.project.services.InitialDataService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 

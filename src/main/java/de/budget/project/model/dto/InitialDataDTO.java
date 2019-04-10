@@ -1,6 +1,5 @@
 package de.budget.project.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import de.budget.project.model.dao.CategoryDAO;
 import de.budget.project.model.types.CategoryType;
 import de.budget.project.model.types.CurrencyType;
