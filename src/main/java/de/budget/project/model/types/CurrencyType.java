@@ -1,7 +1,14 @@
 package de.budget.project.model.types;
 
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import de.budget.project.model.dao.TransactionDAO;
+import de.budget.project.model.dto.InitialDataDTO;
+
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public enum CurrencyType {
     USD(1, "USD", "United States Dollar"),
@@ -12,7 +19,9 @@ public enum CurrencyType {
     private String name;
     private String description;
 
-    CurrencyType(Integer id, String name, String description) {
+
+    @JsonCreator
+    CurrencyType(@JsonProperty("id") Integer id, @JsonProperty("name") String name, @JsonProperty("DESC") String description) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -62,5 +71,11 @@ public enum CurrencyType {
                 .filter(k -> k.getName().equals(name))
                 .findFirst();
         return currency.orElseThrow(() -> new IllegalArgumentException("Name cannot be null"));
+    }
+
+    @Override
+    @JsonValue
+    public String toString() {
+        return  "{'id': " + id + ", 'name': '" + name + "', " + "'description': '" + description + "'}";
     }
 }

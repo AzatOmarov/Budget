@@ -18,8 +18,6 @@ public class InitController {
     CategoryService categoryService;
 
     @GetMapping("/initdata/categories")
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
     public InitialDataDTO getCategoryTypeList() {
         InitialDataDTO initialDataDTO = new InitialDataDTO(initialDataService.getCategoryTypes(),
                                             initialDataService.getCurrencyTypes(),

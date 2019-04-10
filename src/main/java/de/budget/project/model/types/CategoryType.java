@@ -1,15 +1,23 @@
 package de.budget.project.model.types;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
+
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Optional;
 
-public enum CategoryType {
+public enum CategoryType implements Serializable {
     DEBIT(1, "DEBIT"),
     CREDIT(2, "CREDIT");
 
     private Integer id;
+
     private String name;
 
+    @JsonCreator
     CategoryType(Integer id, String name) {
         this.id = id;
         this.name = name;
@@ -56,5 +64,9 @@ public enum CategoryType {
         return categoryType.orElseThrow(() -> new IllegalArgumentException("Name cannot be null"));
     }
 
-
+    @Override
+    @JsonValue
+    public String toString() {
+        return  "{ 'id': " + id + ", 'name': '" + name + "'}";
+    }
 }

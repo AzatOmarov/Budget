@@ -1,10 +1,13 @@
 package de.budget.project.services;
 
-import java.util.Map;
+import de.budget.project.model.types.CategoryType;
+import de.budget.project.model.types.CurrencyType;
+
+import java.util.List;
 
 public interface InitialDataService {
 
-    Map<Integer, String> getCategoryTypes();
-    Map<Integer, Map<String,String>> getCurrencyTypes();
+    List<CategoryType> getCategoryTypes();
+    List<CurrencyType> getCurrencyTypes();
 
 }
