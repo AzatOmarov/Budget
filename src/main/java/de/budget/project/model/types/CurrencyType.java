@@ -14,7 +14,6 @@ public enum CurrencyType {
     private String name;
     private String description;
 
-    @JsonCreator
     CurrencyType(Integer id, String name, String description) {
         this.id = id;
         this.name = name;

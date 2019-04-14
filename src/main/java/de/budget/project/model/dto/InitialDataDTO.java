@@ -11,7 +11,6 @@ import java.util.List;
 @Data
 public class InitialDataDTO {
 
-
     private List<CategoryType> categoryTypeList;
     private List<CurrencyType> currencyTypeList;
     private List<CategoryDAO> categoryList;

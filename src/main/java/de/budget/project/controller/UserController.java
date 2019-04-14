@@ -1,5 +1,6 @@
 package de.budget.project.controller;
 
+import de.budget.project.exception.exceptions.InputValidationException;
 import de.budget.project.model.entites.User;
 import de.budget.project.model.web.UserWebRequest;
 import de.budget.project.model.web.UserWebResponse;
@@ -7,6 +8,7 @@ import de.budget.project.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,7 +26,10 @@ public class UserController {
     @PostMapping("/users")
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
-    public Long createUser(@RequestBody @Valid UserWebRequest userWebRequest) {
+    public Long createUser(@RequestBody @Valid UserWebRequest userWebRequest, BindingResult result) {
+        if(result.hasErrors()){
+            throw new InputValidationException(result);
+        }
         return userService.createUser(convertToEntity(userWebRequest));
     }
 

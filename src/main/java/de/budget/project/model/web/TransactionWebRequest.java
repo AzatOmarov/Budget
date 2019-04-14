@@ -1,6 +1,9 @@
 package de.budget.project.model.web;
 
+import de.budget.project.annotations.IsLongNotNull;
 import lombok.Data;
+import org.hibernate.annotations.Type;
+import org.hibernate.validator.internal.constraintvalidators.bv.number.bound.MaxValidatorForNumber;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
@@ -12,9 +15,11 @@ public class TransactionWebRequest {
     private Date customDate;
 
     @NotNull
-    @Min(value = 0L)
+    @Min(value = 0L, message = "negative amounts are not allowed")
     private BigDecimal amount;
 
+    @Min(value = 1)
+    @IsLongNotNull
     private Long walletId;
 
     @NotNull
@@ -23,4 +28,5 @@ public class TransactionWebRequest {
 
     @Size(max = 255)
     private String description;
-}
+
+    }

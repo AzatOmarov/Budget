@@ -1,5 +1,6 @@
 package de.budget.project.controller;
 
+import de.budget.project.exception.exceptions.CategoryTypeNotFoundException;
 import de.budget.project.model.dao.CategoryDAO;
 import de.budget.project.model.entites.Category;
 import de.budget.project.model.types.CategoryType;
@@ -29,13 +30,20 @@ public class CategoryController {
     @GetMapping("/categories/{id}")
     @ResponseBody
     public CategoryWebDto getCategoryById(@PathVariable Long id) {
-        return convertToDto(categoryService.getCategoryById(id));
+        Category category = categoryService.getCategoryById(id);
+        if (category == null){
+            throw new CategoryTypeNotFoundException("Category by id: " + id + " is not found");
+        } else
+        return convertToDto(category);
     }
 
     @GetMapping("/categories/type/{type}")
     @ResponseBody
     public List<CategoryWebDto> getAllByCategoryType(@PathVariable CategoryType type) {
         List<Category> categories = categoryService.getAllByCategoryType(type);
+        if(categories.isEmpty()){
+            throw new CategoryTypeNotFoundException("There are no category items by categoryType " + type);
+        }
         return categories
                 .stream()
                 .map(this::convertToDto)
