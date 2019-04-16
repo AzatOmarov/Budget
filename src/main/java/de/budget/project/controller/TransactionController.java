@@ -1,18 +1,15 @@
 package de.budget.project.controller;
 
-import de.budget.project.exception.exceptions.CategoryTypeNotFoundException;
 import de.budget.project.exception.exceptions.InputValidationException;
-import de.budget.project.exception.exceptions.TransactionNotFoundException;
+import de.budget.project.exception.exceptions.ResourceNotFoundException;
 import de.budget.project.model.dao.TransactionDAO;
 import de.budget.project.model.entites.Transaction;
 import de.budget.project.model.web.TransactionWebRequest;
 import de.budget.project.model.web.TransactionWebResponse;
 import de.budget.project.services.TransactionService;
-import org.hibernate.result.spi.ResultContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -45,8 +42,8 @@ public class TransactionController {
     public TransactionWebResponse getTransactionById(@PathVariable("id") Long id) {
         Transaction transaction = transactionService.getTransactionById(id);
         if (transaction == null){
-            throw new TransactionNotFoundException("Transaction by id " + id + " is not found");
-        } else
+            throw new ResourceNotFoundException("Transaction by id " + id + " is not found");
+        }
         return convertToWebResponse(transaction);
     }
 
@@ -55,7 +52,7 @@ public class TransactionController {
     public List<TransactionWebResponse> getTransactionsByWalletId(@PathVariable("id") Long walletId) {
         List<Transaction> transactions = transactionService.getTransactionsByWalletId(walletId);
         if(transactions.isEmpty()){
-         throw new TransactionNotFoundException("There are no transactions made within wallet by id " + walletId);
+            throw new ResourceNotFoundException("There are no transactions made within wallet by id " + walletId);
         }
         return convertToListWebResponse(transactions);
     }
@@ -65,8 +62,8 @@ public class TransactionController {
     public List<TransactionDAO> getTransactionsByUserId(@PathVariable("id") Long id) {
         List<TransactionDAO> transactionDAOS = transactionService.getTransactionsByUserId(id);
         if(transactionDAOS.isEmpty()){
-            throw new TransactionNotFoundException("There are no transactions belongs to user by id " + id);
-        } else
+            throw new ResourceNotFoundException("There are no transactions belongs to user by id " + id);
+        }
         return transactionDAOS;
     }
 

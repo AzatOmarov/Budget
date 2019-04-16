@@ -4,7 +4,9 @@ import de.budget.project.model.dto.InitialDataDTO;
 import de.budget.project.services.CategoryService;
 import de.budget.project.services.InitialDataService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
@@ -23,7 +25,4 @@ public class InitController {
                                             categoryService.getAllCategories());
         return initialDataDTO;
     }
-
-
-
 }

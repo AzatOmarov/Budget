@@ -1,12 +1,8 @@
 package de.budget.project.handlers;
 
-import com.sun.net.httpserver.Headers;
 import de.budget.project.error.ErrorResponse;
 import de.budget.project.error.ErrorType;
 import de.budget.project.exception.AbstractAPIException;
-import de.budget.project.exception.exceptions.CategoryNotFoundException;
-import de.budget.project.exception.exceptions.TransactionNotFoundException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

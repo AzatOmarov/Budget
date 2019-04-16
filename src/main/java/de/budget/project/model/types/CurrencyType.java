@@ -1,7 +1,5 @@
 package de.budget.project.model.types;
 
-import com.fasterxml.jackson.annotation.*;
-
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -67,7 +65,6 @@ public enum CurrencyType {
     }
 
     @Override
-    @JsonValue
     public String toString() {
         return  "{'id': " + id + ", 'name': '" + name + "', " + "'description': '" + description + "'}";
     }

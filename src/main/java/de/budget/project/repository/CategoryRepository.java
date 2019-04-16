@@ -16,6 +16,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     @Query("SELECT new de.budget.project.model.dao.CategoryDAO" +
             "(c.id, c.name, c.categoryType)" +
-            "FROM Category c WHERE c.categoryType = 1 OR c.categoryType = 2")
+            "FROM Category c")
     List<CategoryDAO> getAllCategories();
 }

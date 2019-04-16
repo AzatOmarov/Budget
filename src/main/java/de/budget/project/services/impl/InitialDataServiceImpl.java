@@ -4,7 +4,6 @@ import de.budget.project.model.types.CategoryType;
 import de.budget.project.model.types.CurrencyType;
 import de.budget.project.services.InitialDataService;
 import org.springframework.stereotype.Service;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,12 +12,12 @@ import java.util.List;
 public class InitialDataServiceImpl implements InitialDataService {
 
     @Override
-    public List<CategoryType> getCategoryTypes(){
+    public List<CategoryType> getCategoryTypes() {
         return Arrays.asList(CategoryType.values());
     }
 
     @Override
-    public List<CurrencyType> getCurrencyTypes() {
-        return  Arrays.asList(CurrencyType.values());
+    public String getCurrencyTypes() {
+        return  Arrays.toString(CurrencyType.values());
     }
 }

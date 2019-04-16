@@ -1,6 +1,5 @@
 package de.budget.project.model.types;
 
-import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -12,7 +11,7 @@ public enum CategoryType {
     private Integer id;
     private String name;
 
-    CategoryType(Integer id, String name) {
+    CategoryType (Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -59,8 +58,7 @@ public enum CategoryType {
     }
 
     @Override
-    @JsonValue
     public String toString() {
-        return  "{'id': " + id + ", 'name': '" + name + "'}";
+        return "{'id': " + id + "; 'name': '" + name + "'}";
     }
 }

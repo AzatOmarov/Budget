@@ -2,7 +2,6 @@ package de.budget.project.exception;
 
 import de.budget.project.error.ErrorType;
 import de.budget.project.error.errors.InputValidationError;
-import de.budget.project.exception.AbstractAPIException;
 
 import java.util.List;
 

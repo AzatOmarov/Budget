@@ -1,7 +1,5 @@
 package de.budget.project.annotations;
 
-import de.budget.project.model.web.TransactionWebRequest;
-
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;

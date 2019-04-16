@@ -1,6 +1,6 @@
 package de.budget.project.controller;
 
-import de.budget.project.exception.exceptions.CategoryTypeNotFoundException;
+import de.budget.project.exception.exceptions.ResourceNotFoundException;
 import de.budget.project.model.dao.CategoryDAO;
 import de.budget.project.model.entites.Category;
 import de.budget.project.model.types.CategoryType;
@@ -32,8 +32,8 @@ public class CategoryController {
     public CategoryWebDto getCategoryById(@PathVariable Long id) {
         Category category = categoryService.getCategoryById(id);
         if (category == null){
-            throw new CategoryTypeNotFoundException("Category by id: " + id + " is not found");
-        } else
+            throw new ResourceNotFoundException("Category by id: " + id + " is not found");
+        }
         return convertToDto(category);
     }
 
@@ -42,12 +42,21 @@ public class CategoryController {
     public List<CategoryWebDto> getAllByCategoryType(@PathVariable CategoryType type) {
         List<Category> categories = categoryService.getAllByCategoryType(type);
         if(categories.isEmpty()){
-            throw new CategoryTypeNotFoundException("There are no category items by categoryType " + type);
+            throw new ResourceNotFoundException("There are no category items by categoryType " + type);
         }
         return categories
                 .stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/categories")
+    public List<CategoryDAO> getAll(){
+        List<CategoryDAO> categoryDAOS = categoryService.getAllCategories();
+        if(categoryDAOS.isEmpty()){
+            throw new ResourceNotFoundException("Category list is empty, check db connection");
+        }
+        return categoryService.getAllCategories();
     }
 
     private CategoryWebDto convertToDto(Category category) {
@@ -59,10 +68,5 @@ public class CategoryController {
         category.setName(categoryWebDto.getName());
         category.setCategoryType(CategoryType.findCategoryTypeId(categoryWebDto.getCategoryTypeId()));
         return category;
-    }
-
-    @GetMapping("/categories")
-    public List<CategoryDAO> getAll(){
-        return categoryService.getAllCategories();
     }
 }
