@@ -38,11 +38,11 @@ class Login extends Component {
                                 </button>
                             </div>
                             <div className="modal-body">
-                                <form>
+                                <form className="needs-validation">
                                     <div className="form-group">
-                                        <label htmlFor="userInputEmail1">Email address</label>
+                                        <label htmlFor="userInputEmail1">Email</label>
                                         <input type="email" className="form-control" id="userInputEmail1"
-                                               aria-describedby="emailHelp" placeholder="Enter email"/>
+                                               aria-describedby="emailHelp" placeholder="Enter email" required/>
                                         <small id="emailHelp" className="form-text text-muted">We'll never share
                                             your email with anyone else.
                                         </small>
@@ -50,7 +50,7 @@ class Login extends Component {
                                     <div className="form-group">
                                         <label htmlFor="userInputPassword">Password</label>
                                         <input type="password" className="form-control" id="userInputPassword"
-                                               placeholder="Password"/>
+                                               placeholder="Password" required/>
                                     </div>
                                     <button type="submit" className="btn btn-primary">Submit</button>
                                 </form>
