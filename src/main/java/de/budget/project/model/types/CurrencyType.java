@@ -63,4 +63,9 @@ public enum CurrencyType {
                 .findFirst();
         return currency.orElseThrow(() -> new IllegalArgumentException("Name cannot be null"));
     }
+
+    @Override
+    public String toString() {
+        return  "{'id': " + id + ", 'name': '" + name + "', " + "'description': '" + description + "'}";
+    }
 }

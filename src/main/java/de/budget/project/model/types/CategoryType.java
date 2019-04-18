@@ -3,6 +3,7 @@ package de.budget.project.model.types;
 import java.util.Arrays;
 import java.util.Optional;
 
+
 public enum CategoryType {
     DEBIT(1, "DEBIT"),
     CREDIT(2, "CREDIT");
@@ -10,7 +11,7 @@ public enum CategoryType {
     private Integer id;
     private String name;
 
-    CategoryType(Integer id, String name) {
+    CategoryType (Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -56,5 +57,8 @@ public enum CategoryType {
         return categoryType.orElseThrow(() -> new IllegalArgumentException("Name cannot be null"));
     }
 
-
+    @Override
+    public String toString() {
+        return "{'id': " + id + "; 'name': '" + name + "'}";
+    }
 }

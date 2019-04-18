@@ -1,5 +1,7 @@
 package de.budget.project.controller;
 
+import de.budget.project.exception.exceptions.ResourceNotFoundException;
+import de.budget.project.model.dao.CategoryDAO;
 import de.budget.project.model.entites.Category;
 import de.budget.project.model.types.CategoryType;
 import de.budget.project.model.web.CategoryWebDto;
@@ -28,17 +30,33 @@ public class CategoryController {
     @GetMapping("/categories/{id}")
     @ResponseBody
     public CategoryWebDto getCategoryById(@PathVariable Long id) {
-        return convertToDto(categoryService.getCategoryById(id));
+        Category category = categoryService.getCategoryById(id);
+        if (category == null){
+            throw new ResourceNotFoundException("Category by id: " + id + " is not found");
+        }
+        return convertToDto(category);
     }
 
     @GetMapping("/categories/type/{type}")
     @ResponseBody
     public List<CategoryWebDto> getAllByCategoryType(@PathVariable CategoryType type) {
         List<Category> categories = categoryService.getAllByCategoryType(type);
+        if(categories.isEmpty()){
+            throw new ResourceNotFoundException("There are no category items by categoryType " + type);
+        }
         return categories
                 .stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/categories")
+    public List<CategoryDAO> getAll(){
+        List<CategoryDAO> categoryDAOS = categoryService.getAllCategories();
+        if(categoryDAOS.isEmpty()){
+            throw new ResourceNotFoundException("Category list is empty, check db connection");
+        }
+        return categoryService.getAllCategories();
     }
 
     private CategoryWebDto convertToDto(Category category) {

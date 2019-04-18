@@ -1,5 +1,6 @@
 package de.budget.project.services.impl;
 
+import de.budget.project.model.dao.CategoryDAO;
 import de.budget.project.model.entites.Category;
 import de.budget.project.model.types.CategoryType;
 import de.budget.project.repository.CategoryRepository;
@@ -22,11 +23,17 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category getCategoryById(Long id) {
-        return categoryRepository.getCategoryById(id);
+        Category category = categoryRepository.getCategoryById(id);
+        return category;
     }
 
     @Override
     public List<Category> getAllByCategoryType(CategoryType categoryType) {
         return categoryRepository.getAllByCategoryType(categoryType);
+    }
+
+    @Override
+    public List<CategoryDAO> getAllCategories() {
+        return categoryRepository.getAllCategories();
     }
 }

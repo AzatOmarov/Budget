@@ -1,5 +1,6 @@
 package de.budget.project.services;
 
+import de.budget.project.model.dao.CategoryDAO;
 import de.budget.project.model.entites.Category;
 import de.budget.project.model.types.CategoryType;
 
@@ -12,4 +13,7 @@ public interface CategoryService {
     Category getCategoryById(Long id);
 
     List<Category> getAllByCategoryType(CategoryType categoryType);
+
+    List<CategoryDAO> getAllCategories();
+
 }

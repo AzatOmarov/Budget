@@ -1,29 +1,28 @@
 package de.budget.project.controller;
 
-import de.budget.project.model.types.CategoryType;
-import de.budget.project.model.types.CurrencyType;
-import de.budget.project.model.web.CategoryTypeWebDto;
-import de.budget.project.model.web.CategoryWebDto;
-import de.budget.project.model.web.CurrencyWebDto;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import de.budget.project.model.dto.InitialDataDTO;
+import de.budget.project.services.CategoryService;
+import de.budget.project.services.InitialDataService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api")
 public class InitController {
 
-    private CategoryWebDto categoryWebDto;
-    private CurrencyWebDto currencyWebDto;
-    private CategoryTypeWebDto categoryTypeWebDto;
+    @Autowired
+    InitialDataService initialDataService;
+    @Autowired
+    CategoryService categoryService;
 
-    @PostConstruct
-    private void init(){
-
+    @GetMapping("/initdata/categories")
+    public InitialDataDTO getCategoryTypeList() {
+        InitialDataDTO initialDataDTO = new InitialDataDTO(initialDataService.getCategoryTypes(),
+                                            initialDataService.getCurrencyTypes(),
+                                            categoryService.getAllCategories());
+        return initialDataDTO;
     }
-
 }

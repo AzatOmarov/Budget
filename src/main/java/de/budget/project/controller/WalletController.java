@@ -1,9 +1,11 @@
 package de.budget.project.controller;
 
+import de.budget.project.exception.exceptions.ResourceNotFoundException;
 import de.budget.project.model.entites.Wallet;
 import de.budget.project.model.types.CurrencyType;
 import de.budget.project.model.web.WalletWebRequest;
 import de.budget.project.model.web.WalletWebResponse;
+import de.budget.project.services.UserService;
 import de.budget.project.services.WalletService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class WalletController {
     @Autowired
     WalletService walletService;
 
+    @Autowired
+    UserService userService;
+
     @PostMapping("/wallets")
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
@@ -34,13 +39,20 @@ public class WalletController {
     @GetMapping("/wallets/{id}")
     @ResponseBody
     public WalletWebResponse getWalletById(@PathVariable("id") Long id) {
+        WalletWebResponse walletWebResponse = walletService.getWalletById(id);
+        if (walletWebResponse == null){
+            throw new ResourceNotFoundException("Wallet by id " + id + " not found");
+        }
         return walletService.getWalletById(id);
     }
 
     @GetMapping("/wallets/user/{id}")
     @ResponseBody
-    public List<WalletWebResponse> getWalletsByUserId(@PathVariable("id") Long userId) {
+    public List<WalletWebResponse> getWalletsByUserId (@PathVariable("id") Long userId) {
         List<Wallet> wallets = walletService.getWalletsByUserId(userId);
+        if(wallets.isEmpty()){
+            throw new ResourceNotFoundException("User by id " + userId + " has no walltes");
+        }
         return convertToListWebResponse(wallets);
     }
 
