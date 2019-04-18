@@ -6,6 +6,7 @@ import de.budget.project.model.dao.TransactionDAO;
 import de.budget.project.model.entites.Transaction;
 import de.budget.project.model.web.TransactionWebRequest;
 import de.budget.project.model.web.TransactionWebResponse;
+import de.budget.project.repository.TransactionRepository;
 import de.budget.project.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,18 @@ public class TransactionController {
 
     @Autowired
     TransactionService transactionService;
+    @Autowired
+    TransactionRepository transactionRepository;
+
+    @GetMapping("/transactions/date/{date}")
+    @ResponseBody
+    public List<TransactionDAO> getTransactionsByUserIdAndDate(@PathVariable("date") String date) {
+        List<TransactionDAO> transactions = transactionService.getTransactionsByIdAndDate(date);
+        if(transactions.isEmpty()){
+            throw new ResourceNotFoundException("There are no transactions on " + date);
+        }
+        return transactions;
+    }
 
     @PostMapping("/transactions")
     @ResponseBody

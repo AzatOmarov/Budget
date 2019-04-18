@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -63,5 +65,20 @@ public class TransactionServiceImpl implements TransactionService {
                 .reduce(BigDecimal::add)
                 .orElse(new BigDecimal(0));
         return debitSum.add(creditSum);
+    }
+
+    @Override
+    public List<TransactionDAO> getTransactionsByIdAndDate(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = sdf.parse(date.concat(" 00:00:01"));
+            endDate = sdf.parse(date.concat(" 23:59:59"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        List<TransactionDAO> transactionDAOS = transactionRepository.getTransactionsByIdAndDate(startDate, endDate);
+        return transactionDAOS;
     }
 }

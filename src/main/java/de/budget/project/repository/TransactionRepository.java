@@ -37,4 +37,10 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long>,
 
     @Query(value = "SELECT * FROM TRANSACTION WHERE ID = (SELECT COUNT(ID) FROM TRANSACTION)", nativeQuery = true)
     Long getLastTransaction();
+
+    @Query(value = "SELECT new de.budget.project.model.dao.TransactionDAO" +
+            "(t.id, t.customDate, t.amount, w.id, t.category.id, t.description, t.createdDate, t.updatedDate )" +
+            "FROM Transaction t JOIN t.wallet w WHERE t.wallet.id = w.id" +
+            " AND t.createdDate between :startDate and :endDate")
+    List<TransactionDAO> getTransactionsByIdAndDate(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }

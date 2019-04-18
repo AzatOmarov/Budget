@@ -22,4 +22,5 @@ public interface TransactionService {
     List<TransactionDAO> getTransactionsByUserId(Long userId);
 
     BigDecimal recalculateBalance(Long walletId);
+    List<TransactionDAO> getTransactionsByIdAndDate(String date);
 }
