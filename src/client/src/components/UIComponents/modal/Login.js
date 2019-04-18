@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
+import axios from "axios";
 
 const Wrapper = styled.div`
     position: relative;
@@ -20,7 +21,34 @@ const Link = styled.a`
 `;
 
 class Login extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            user: {},
+            email: ''
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({email: event.target.value});
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+
+        axios.get("http://localhost:2030/api/users/email/" + this.state.email).then(res => {
+            const user = res.data;
+            this.setState({user});
+        });
+    }
+
     render() {
+        const {user} = this.state;
         return (
             <Wrapper>
                 <LinkWrapper>
@@ -42,7 +70,9 @@ class Login extends Component {
                                     <div className="form-group">
                                         <label htmlFor="userInputEmail1">Email</label>
                                         <input type="email" className="form-control" id="userInputEmail1"
-                                               aria-describedby="emailHelp" placeholder="Enter email" required/>
+                                               aria-describedby="emailHelp" placeholder="Enter email"
+                                               value={this.state.email}
+                                               onChange={this.handleChange} required/>
                                         <small id="emailHelp" className="form-text text-muted">We'll never share
                                             your email with anyone else.
                                         </small>
@@ -52,7 +82,10 @@ class Login extends Component {
                                         <input type="password" className="form-control" id="userInputPassword"
                                                placeholder="Password" required/>
                                     </div>
-                                    <button type="submit" className="btn btn-primary">Submit</button>
+                                    <button onSubmit={this.handleSubmit} type="submit"
+                                            className="btn btn-primary">Submit
+                                    </button>
+                                    <p>{user.id} {user.name} {user.email}</p>
                                 </form>
                             </div>
                         </div>

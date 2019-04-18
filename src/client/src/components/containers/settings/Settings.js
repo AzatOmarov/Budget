@@ -1,21 +1,36 @@
-import React from 'react';
-import {Link, Route} from 'react-router-dom';
+import React, {Component} from 'react';
+import Title from '../../UIComponents/header/title/Title';
+import Slogan from '../../UIComponents/header/slogan/Slogan';
 
-const Settings = ({match}) => {
-    return (
-        <div>
-            <p>Settings</p>
-            <div>
-                <ul>
-                    <li><Link to={`${match.url}/categories`}>Categories</Link></li>
-                    <li><Link to={`${match.url}/wallet`}>Wallet</Link></li>
-                </ul>
+class Settings extends Component {
+    render() {
+        return (
+            <div className="container">
+                <div className="row">
+                    <div className="col-5"/>
+                    <div className="col-7">
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-5">
+                        <Title/>
+                    </div>
+                    <div className="col-7">
+                        <Slogan/>
+                    </div>
+                </div>
+                <div className="frame-div">
+                    <div className="row">
+                        <div className="col-2"/>
+                        <div className="col-8">
 
-                <Route exact path={`${match.path}/:settings`}
-                       render={({match}) => (<div> This is {match.params.settings} </div>)}/>
+                        </div>
+                        <div className="col-2"/>
+                    </div>
+                </div>
             </div>
-        </div>
-    );
-};
+        )
+    }
+}
 
 export default Settings;

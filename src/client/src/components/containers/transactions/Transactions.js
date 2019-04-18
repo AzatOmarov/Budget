@@ -1,11 +1,36 @@
-import React from 'react';
+import React, {Component} from 'react';
+import Title from '../../UIComponents/header/title/Title';
+import Slogan from '../../UIComponents/header/slogan/Slogan';
 
-const Transactions = () => {
-    return (
-        <div>
-            <p>Transactions</p>
-        </div>
-    );
-};
+class Transactions extends Component {
+    render() {
+        return (
+            <div className="container">
+                <div className="row">
+                    <div className="col-5"/>
+                    <div className="col-7">
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-5">
+                        <Title/>
+                    </div>
+                    <div className="col-7">
+                        <Slogan/>
+                    </div>
+                </div>
+                <div className="frame-div">
+                    <div className="row">
+                        <div className="col-2"/>
+                        <div className="col-8">
+
+                        </div>
+                        <div className="col-2"/>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+}
 
 export default Transactions;

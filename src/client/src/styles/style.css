@@ -50,3 +50,16 @@ body {
 }
 
 
+a.login {
+    font-size: 20px;
+    text-decoration: underline;
+    color: #5f8420;
+    text-align: right;
+}
+
+a.login:hover {
+    font-size: 20px;
+    text-decoration: underline;
+    color: #5f8420;
+    text-align: right;
+}
