@@ -19,6 +19,7 @@ class Settings extends Component {
                         <div className="col-2"/>
                         <div className="col-8">
                             <h2>Settings</h2>
+                            <p>Hi, {this.props.userId}</p>
                         </div>
                         <div className="col-2"/>
                     </div>

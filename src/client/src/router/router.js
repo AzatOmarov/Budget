@@ -13,6 +13,8 @@ import Settings from '../components/containers/settings/Settings.js';
 import Profile from '../components/containers/profile/Profile.js';
 import axios from 'axios';
 
+window.userId = '';
+
 function Start() {
     return (
         <Router>
@@ -56,9 +58,9 @@ const AuthButton = withRouter(
         fakeAuth.isAuthenticated ? (
             <p>
                 <a href="/"
-                    onClick={() => {
-                        fakeAuth.signout(() => history.push("/"));
-                    }}
+                   onClick={() => {
+                       fakeAuth.signout(() => history.push("/"));
+                   }}
                 >
                     Sign out
                 </a>
@@ -100,7 +102,7 @@ function Protected() {
             <li className="nav-item nav-link"><Link to="/protected/profile">Profile</Link></li>
         </ul>
         <Route path="/protected/transactions" component={Transactions}/>
-        <Route path="/protected/settings" component={Settings}/>
+        <Route path="/protected/settings" component={() => <Settings userId={window.userId}/>}/>
         <Route path="/protected/profile" component={Profile}/>
     </div>
 }
@@ -129,7 +131,8 @@ class Login extends Component {
     getUserByEmail() {
         axios.get("http://localhost:2030/api/users/email/" + this.state.email).then(res => {
             const user = res.data;
-            this.setState({user});
+            window.userId = user.id;
+            //   this.setState({user});
         });
     }
 
@@ -140,6 +143,7 @@ class Login extends Component {
     };
 
     handleSubmit(event) {
+        console.log('submit');
         event.preventDefault();
         this.getUserByEmail();
         this.login();
@@ -156,7 +160,7 @@ class Login extends Component {
                 <div className="login">
                     <p>You must log in to view more information</p>
 
-                    <form className="needs-validation">
+                    <form className="needs-validation" onSubmit={this.handleSubmit}>
                         <div className="form-group">
                             <label htmlFor="userInputEmail1">Email</label>
                             <input type="email" className="form-control" id="userInputEmail1"
@@ -173,9 +177,9 @@ class Login extends Component {
                             <input type="password" className="form-control" id="userInputPassword"
                                    placeholder="Password" required/>
                         </div>
-                        <button className="btn btn-primary" onClick={this.handleSubmit} type="submit">Log in
-                        </button>
+                        <input className="btn btn-primary" type="submit" value="Log in"/>
                     </form>
+
                 </div>
             </div>
         );
