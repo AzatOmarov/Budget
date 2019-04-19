@@ -7,11 +7,6 @@ class Transactions extends Component {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-5"/>
-                    <div className="col-7">
-                    </div>
-                </div>
-                <div className="row">
                     <div className="col-5">
                         <Title/>
                     </div>
@@ -19,11 +14,11 @@ class Transactions extends Component {
                         <Slogan/>
                     </div>
                 </div>
-                <div className="frame-div">
+                <div className="frame-big">
                     <div className="row">
                         <div className="col-2"/>
                         <div className="col-8">
-
+                            <h2>Transactions</h2>
                         </div>
                         <div className="col-2"/>
                     </div>

@@ -8,12 +8,45 @@ body {
     border-top: 1px solid #5f8420;
 }
 
-.frame-div {
+div.frame-big {
     border: 2px solid #5f8420;
     border-radius: 5px;
     width: 100%;
     height: 600px;
     margin: 0 auto;
+}
+
+div.auth {
+    margin-top: 1%;
+    padding-right: 30px;
+    text-align: right;
+}
+
+div.auth a {
+    font-size: 15px;
+    text-decoration: underline;
+    color: #5f8420;
+    text-align: right;
+}
+
+div.auth p {
+    margin-bottom: 2px;
+}
+
+div.frame-small {
+    border: 2px solid #5f8420;
+    border-radius: 5px;
+    width: 60%;
+    height: 370px;
+    margin: 5% auto 0;
+}
+
+div.login {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    margin-top: 8%;
 }
 
 .btn-primary {
@@ -47,19 +80,4 @@ body {
 
 .btn-primary:not(:disabled):not(.disabled).active:focus, .btn-primary:not(:disabled):not(.disabled):active:focus, .show > .btn-primary.dropdown-toggle:focus {
     box-shadow: 0 0 0 .2rem rgba(95, 132, 32, .5)
-}
-
-
-a.login {
-    font-size: 20px;
-    text-decoration: underline;
-    color: #5f8420;
-    text-align: right;
-}
-
-a.login:hover {
-    font-size: 20px;
-    text-decoration: underline;
-    color: #5f8420;
-    text-align: right;
 }

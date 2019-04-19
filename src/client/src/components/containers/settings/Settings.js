@@ -1,16 +1,11 @@
 import React, {Component} from 'react';
-import Title from '../../UIComponents/header/title/Title';
-import Slogan from '../../UIComponents/header/slogan/Slogan';
+import Title from '../../UIComponents/header/title/Title.js';
+import Slogan from '../../UIComponents/header/slogan/Slogan.js';
 
 class Settings extends Component {
     render() {
         return (
             <div className="container">
-                <div className="row">
-                    <div className="col-5"/>
-                    <div className="col-7">
-                    </div>
-                </div>
                 <div className="row">
                     <div className="col-5">
                         <Title/>
@@ -19,11 +14,11 @@ class Settings extends Component {
                         <Slogan/>
                     </div>
                 </div>
-                <div className="frame-div">
+                <div className="frame-big">
                     <div className="row">
                         <div className="col-2"/>
                         <div className="col-8">
-
+                            <h2>Settings</h2>
                         </div>
                         <div className="col-2"/>
                     </div>
