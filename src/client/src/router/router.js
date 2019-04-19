@@ -7,21 +7,48 @@ import {
     withRouter
 } from 'react-router-dom';
 
+import {connect} from 'react-redux'
+import {axiosUserAction, axiosUserActionAsync} from "../actions/user-actions.js";
+
 import App from '../components/containers/app/App.js';
 import Transactions from '../components/containers/transactions/Transactions.js';
 import Settings from '../components/containers/settings/Settings.js';
 import Profile from '../components/containers/profile/Profile.js';
 import axios from 'axios';
 
-window.userId = '';
+const mapDispatchToProps = dispatch => {
+    return {
+        axiosUserAsync: () => {
+            dispatch(axiosUserActionAsync())
+        },
+        axiosUser: () => {
+            dispatch(axiosUserAction())
+        }
+    }
+};
 
-function Start() {
+const mapStateToProps = state => {
+    const u = state.userId;
+
+    console.log('set app state');
+    return {
+        userId: u
+    }
+};
+
+const ConnectedLogin = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)((Login));
+
+function Start(props) {
     return (
         <Router>
             <div className="container">
                 <div className="row">
                     <div className="col-6"/>
                     <div className="col-6 auth">
+                        <h1>hello, {props.userId}</h1>
                         <AuthButton/>
                         <Link to="/public">Demo</Link>&nbsp;&nbsp;
                         <Link to="/protected/settings">Login</Link>
@@ -30,7 +57,7 @@ function Start() {
                 <div className="row">
                     <div className="col-12">
                         <Route path="/public" component={Public}/>
-                        <Route path="/login" component={Login}/>
+                        <Route path="/login" component={ConnectedLogin}/>
                         <PrivateRoute path="/protected/transactions" component={Protected}/>
                         <PrivateRoute path="/protected/settings" component={Protected}/>
                         <PrivateRoute path="/protected/profile" component={Protected}/>
@@ -102,7 +129,7 @@ function Protected() {
             <li className="nav-item nav-link"><Link to="/protected/profile">Profile</Link></li>
         </ul>
         <Route path="/protected/transactions" component={Transactions}/>
-        <Route path="/protected/settings" component={() => <Settings userId={window.userId}/>}/>
+        <Route path="/protected/settings" component={Settings}/>
         <Route path="/protected/profile" component={Profile}/>
     </div>
 }
@@ -131,8 +158,7 @@ class Login extends Component {
     getUserByEmail() {
         axios.get("http://localhost:2030/api/users/email/" + this.state.email).then(res => {
             const user = res.data;
-            window.userId = user.id;
-            //   this.setState({user});
+            this.setState({user});
         });
     }
 
@@ -143,9 +169,10 @@ class Login extends Component {
     };
 
     handleSubmit(event) {
-        console.log('submit');
         event.preventDefault();
-        this.getUserByEmail();
+        //axiosUserAction();
+        this.props.dispatch({type: 'AXIOS_USER'});
+        //this.getUserByEmail();
         this.login();
     }
 
@@ -160,7 +187,7 @@ class Login extends Component {
                 <div className="login">
                     <p>You must log in to view more information</p>
 
-                    <form className="needs-validation" onSubmit={this.handleSubmit}>
+                    <form className="needs-validation">
                         <div className="form-group">
                             <label htmlFor="userInputEmail1">Email</label>
                             <input type="email" className="form-control" id="userInputEmail1"
@@ -177,9 +204,9 @@ class Login extends Component {
                             <input type="password" className="form-control" id="userInputPassword"
                                    placeholder="Password" required/>
                         </div>
-                        <input className="btn btn-primary" type="submit" value="Log in"/>
+                        <button className="btn btn-primary" onClick={this.handleSubmit} type="submit">Log in
+                        </button>
                     </form>
-
                 </div>
             </div>
         );
