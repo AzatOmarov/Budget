@@ -7,8 +7,8 @@ import {
     withRouter
 } from 'react-router-dom';
 
-import {connect} from 'react-redux'
-import {axiosUserAction, axiosUserActionAsync} from "../actions/user-actions.js";
+import {connect} from 'react-redux';
+import {axiosUserActionAsync} from '../actions/user-actions.js';
 
 import App from '../components/containers/app/App.js';
 import Transactions from '../components/containers/transactions/Transactions.js';
@@ -16,13 +16,90 @@ import Settings from '../components/containers/settings/Settings.js';
 import Profile from '../components/containers/profile/Profile.js';
 import axios from 'axios';
 
+class Login extends Component {
+
+    state = {
+        redirectToReferrer: false
+    };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: {},
+            email: ''
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({email: event.target.value});
+    };
+
+    getUserByEmail() {
+        axios.get("http://localhost:2030/api/users/email/" + this.state.email).then(res => {
+            const user = res.data;
+            this.setState({user});
+        });
+    }
+
+    login = () => {
+        fakeAuth.authenticate(() => {
+            this.setState({redirectToReferrer: true});
+        });
+    };
+
+    handleSubmit(event) {
+        event.preventDefault();
+        this.getUserByEmail();
+
+        //this.props.axiosUser();!!!
+
+        this.login();
+    }
+
+    render() {
+
+        let {from} = this.props.location.state || {from: {pathname: "/"}};
+        let {redirectToReferrer} = this.state;
+
+        if (redirectToReferrer) return <Redirect to={from}/>;
+
+        return (
+            <div className="frame-small">
+                <div className="login">
+                    <p>You must log in to view more information</p>
+
+                    <form className="needs-validation" onSubmit={this.handleSubmit}>
+                        <div className="form-group">
+                            <label htmlFor="userInputEmail1">Email</label>
+                            <input type="email" className="form-control" id="userInputEmail1"
+                                   aria-describedby="emailHelp" placeholder="Enter email"
+                                   value={this.state.email}
+                                   onChange={this.handleChange}
+                                   required/>
+                            <small id="emailHelp" className="form-text text-muted">
+                                We'll never share your email with anyone else.
+                            </small>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="userInputPassword">Password</label>
+                            <input type="password" className="form-control" id="userInputPassword"
+                                   placeholder="Password" required/>
+                        </div>
+                        <input className="btn btn-primary" type="submit" value="Log in"/>
+                    </form>
+                </div>
+            </div>
+        );
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
-        axiosUserAsync: () => {
-            dispatch(axiosUserActionAsync())
-        },
         axiosUser: () => {
-            dispatch(axiosUserAction())
+            dispatch(axiosUserActionAsync())
         }
     }
 };
@@ -30,16 +107,16 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
     const u = state.userId;
 
-    console.log('set app state');
     return {
         userId: u
     }
 };
 
-const ConnectedLogin = connect(
+connect(
     mapStateToProps,
     mapDispatchToProps
 )((Login));
+
 
 function Start(props) {
     return (
@@ -48,7 +125,7 @@ function Start(props) {
                 <div className="row">
                     <div className="col-6"/>
                     <div className="col-6 auth">
-                        <h1>hello, {props.userId}</h1>
+                        <p>Hi, {props.userId}</p>
                         <AuthButton/>
                         <Link to="/public">Demo</Link>&nbsp;&nbsp;
                         <Link to="/protected/settings">Login</Link>
@@ -57,7 +134,7 @@ function Start(props) {
                 <div className="row">
                     <div className="col-12">
                         <Route path="/public" component={Public}/>
-                        <Route path="/login" component={ConnectedLogin}/>
+                        <Route path="/login" component={Login}/>
                         <PrivateRoute path="/protected/transactions" component={Protected}/>
                         <PrivateRoute path="/protected/settings" component={Protected}/>
                         <PrivateRoute path="/protected/profile" component={Protected}/>
@@ -132,85 +209,6 @@ function Protected() {
         <Route path="/protected/settings" component={Settings}/>
         <Route path="/protected/profile" component={Profile}/>
     </div>
-}
-
-class Login extends Component {
-
-    state = {
-        redirectToReferrer: false
-    };
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            user: {},
-            email: ''
-        };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(event) {
-        this.setState({email: event.target.value});
-    };
-
-    getUserByEmail() {
-        axios.get("http://localhost:2030/api/users/email/" + this.state.email).then(res => {
-            const user = res.data;
-            this.setState({user});
-        });
-    }
-
-    login = () => {
-        fakeAuth.authenticate(() => {
-            this.setState({redirectToReferrer: true});
-        });
-    };
-
-    handleSubmit(event) {
-        event.preventDefault();
-        //axiosUserAction();
-        this.props.dispatch({type: 'AXIOS_USER'});
-        //this.getUserByEmail();
-        this.login();
-    }
-
-    render() {
-        let {from} = this.props.location.state || {from: {pathname: "/"}};
-        let {redirectToReferrer} = this.state;
-
-        if (redirectToReferrer) return <Redirect to={from}/>;
-
-        return (
-            <div className="frame-small">
-                <div className="login">
-                    <p>You must log in to view more information</p>
-
-                    <form className="needs-validation">
-                        <div className="form-group">
-                            <label htmlFor="userInputEmail1">Email</label>
-                            <input type="email" className="form-control" id="userInputEmail1"
-                                   aria-describedby="emailHelp" placeholder="Enter email"
-                                   value={this.state.email}
-                                   onChange={this.handleChange}
-                                   required/>
-                            <small id="emailHelp" className="form-text text-muted">
-                                We'll never share your email with anyone else.
-                            </small>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="userInputPassword">Password</label>
-                            <input type="password" className="form-control" id="userInputPassword"
-                                   placeholder="Password" required/>
-                        </div>
-                        <button className="btn btn-primary" onClick={this.handleSubmit} type="submit">Log in
-                        </button>
-                    </form>
-                </div>
-            </div>
-        );
-    }
 }
 
 export default Start;

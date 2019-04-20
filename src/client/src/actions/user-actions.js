@@ -1,7 +1,6 @@
 import {AXIOS_USER} from '../constants';
 
 export function axiosUserAction() {
-    console.log('action!');
     return {
         type: AXIOS_USER,
         user: {
