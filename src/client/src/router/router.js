@@ -6,6 +6,7 @@ import {
     Redirect,
     withRouter
 } from 'react-router-dom';
+import axios from 'axios';
 
 import {connect} from 'react-redux';
 import {axiosUserActionAsync} from '../actions/user-actions.js';
@@ -14,7 +15,6 @@ import App from '../components/containers/app/App.js';
 import Transactions from '../components/containers/transactions/Transactions.js';
 import Settings from '../components/containers/settings/Settings.js';
 import Profile from '../components/containers/profile/Profile.js';
-import axios from 'axios';
 
 class Login extends Component {
 
@@ -53,14 +53,12 @@ class Login extends Component {
     handleSubmit(event) {
         event.preventDefault();
         this.getUserByEmail();
-
-        //this.props.axiosUser();!!!
-
+        //this.props.axiosUser();
+        //this.props.dispatch({type: 'AXIOS_USER'});
         this.login();
     }
 
     render() {
-
         let {from} = this.props.location.state || {from: {pathname: "/"}};
         let {redirectToReferrer} = this.state;
 
@@ -70,7 +68,7 @@ class Login extends Component {
             <div className="frame-small">
                 <div className="login">
                     <p>You must log in to view more information</p>
-
+                    {/*<p>Hi, {this.state.userId}</p>*/}
                     <form className="needs-validation" onSubmit={this.handleSubmit}>
                         <div className="form-group">
                             <label htmlFor="userInputEmail1">Email</label>

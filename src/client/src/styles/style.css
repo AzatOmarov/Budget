@@ -8,12 +8,12 @@ body {
     border-top: 1px solid #5f8420;
 }
 
-div.frame-big {
-    border: 2px solid #5f8420;
-    border-radius: 5px;
-    width: 100%;
-    height: 600px;
-    margin: 0 auto;
+a {
+    color: #5f8420;
+}
+
+a:hover {
+    color: #496618;
 }
 
 div.auth {
@@ -47,6 +47,26 @@ div.login {
     margin-right: auto;
     width: 90%;
     margin-top: 8%;
+}
+
+div.frame-big {
+    border: 2px solid #5f8420;
+    border-radius: 5px;
+    width: 100%;
+    height: 600px;
+    margin: 0 auto;
+}
+
+div.main-block {
+    margin: 1% 2% 1% 2%;
+}
+
+div.main-block-into {
+    margin: 2% 0 1% -10px;
+}
+
+ul.sub-nav{
+    font-size: 18px;
 }
 
 .btn-primary {

@@ -4,7 +4,7 @@ export function axiosUserAction() {
     return {
         type: AXIOS_USER,
         user: {
-            id: 0,
+            id: 99,
             name: "",
             email: ""
         }

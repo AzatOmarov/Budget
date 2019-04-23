@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Title from '../../UIComponents/header/title/Title';
 import Slogan from '../../UIComponents/header/slogan/Slogan';
+import Table from '../../UIComponents/table/Table.js';
 
 class Transactions extends Component {
     render() {
@@ -19,6 +20,7 @@ class Transactions extends Component {
                         <div className="col-2"/>
                         <div className="col-8">
                             <h2>Transactions</h2>
+                            <Table/>
                         </div>
                         <div className="col-2"/>
                     </div>

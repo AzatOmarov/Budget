@@ -66,7 +66,7 @@ class Login extends Component {
                                 </button>
                             </div>
                             <div className="modal-body">
-                                <form className="needs-validation">
+                                <form className="needs-validation" onSubmit={this.handleSubmit}>
                                     <div className="form-group">
                                         <label htmlFor="userInputEmail1">Email</label>
                                         <input type="email" className="form-control" id="userInputEmail1"
@@ -82,9 +82,7 @@ class Login extends Component {
                                         <input type="password" className="form-control" id="userInputPassword"
                                                placeholder="Password" required/>
                                     </div>
-                                    <button onSubmit={this.handleSubmit} type="submit"
-                                            className="btn btn-primary">Submit
-                                    </button>
+                                    <input className="btn btn-primary" type="submit" value="Log in"/>
                                     <p>{user.id} {user.name} {user.email}</p>
                                 </form>
                             </div>

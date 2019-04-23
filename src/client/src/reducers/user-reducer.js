@@ -9,7 +9,7 @@ function userReducer(state = initialState, action) {
         case AXIOS_USER:
             return Object.assign({}, state, {user: action.user});
         default:
-            return state
+            return state;
     }
 }
 
