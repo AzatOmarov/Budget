@@ -1,7 +1,11 @@
 import {AXIOS_USER} from '../constants';
 
 const initialState = {
-    user: {}
+    user: {
+        id: null,
+        name: null,
+        email: null
+    }
 };
 
 function userReducer(state = initialState, action) {

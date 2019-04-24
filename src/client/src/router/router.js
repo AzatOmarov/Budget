@@ -1,15 +1,8 @@
 import React, {Component} from 'react';
-import {
-    BrowserRouter as Router,
-    Route,
-    Link,
-    Redirect,
-    withRouter
-} from 'react-router-dom';
-import axios from 'axios';
+import {BrowserRouter as Router, Link, Redirect, Route, Switch, withRouter} from 'react-router-dom';
 
 import {connect} from 'react-redux';
-import {axiosUserActionAsync} from '../actions/user-actions.js';
+import {axiosUserAction} from '../store/actions/user-actions.js';
 
 import App from '../components/containers/app/App.js';
 import Transactions from '../components/containers/transactions/Transactions.js';
@@ -18,15 +11,11 @@ import Profile from '../components/containers/profile/Profile.js';
 
 class Login extends Component {
 
-    state = {
-        redirectToReferrer: false
-    };
-
     constructor(props) {
         super(props);
         this.state = {
-            user: {},
-            email: ''
+            email: '',
+            redirectToReferrer: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -40,7 +29,7 @@ class Login extends Component {
     getUserByEmail() {
         axios.get("http://localhost:2030/api/users/email/" + this.state.email).then(res => {
             const user = res.data;
-            this.setState({user});
+        this.props.axiosUser(user);
         });
     }
 
@@ -53,13 +42,11 @@ class Login extends Component {
     handleSubmit(event) {
         event.preventDefault();
         this.getUserByEmail();
-        //this.props.axiosUser();
-        //this.props.dispatch({type: 'AXIOS_USER'});
         this.login();
     }
 
     render() {
-        let {from} = this.props.location.state || {from: {pathname: "/"}};
+        let {from} = this.props.location.state || {from: {pathname: "/settings/wallet"}};
         let {redirectToReferrer} = this.state;
 
         if (redirectToReferrer) return <Redirect to={from}/>;
@@ -68,7 +55,6 @@ class Login extends Component {
             <div className="frame-small">
                 <div className="login">
                     <p>You must log in to view more information</p>
-                    {/*<p>Hi, {this.state.userId}</p>*/}
                     <form className="needs-validation" onSubmit={this.handleSubmit}>
                         <div className="form-group">
                             <label htmlFor="userInputEmail1">Email</label>
@@ -96,24 +82,13 @@ class Login extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        axiosUser: () => {
-            dispatch(axiosUserActionAsync())
+        axiosUser: (user) => {
+            dispatch(axiosUserAction(user))
         }
     }
 };
 
-const mapStateToProps = state => {
-    const u = state.userId;
-
-    return {
-        userId: u
-    }
-};
-
-connect(
-    mapStateToProps,
-    mapDispatchToProps
-)((Login));
+const WrappedLogin = connect(null, mapDispatchToProps)(Login);
 
 
 function Start(props) {
@@ -123,25 +98,31 @@ function Start(props) {
                 <div className="row">
                     <div className="col-6"/>
                     <div className="col-6 auth">
-                        <p>Hi, {props.userId}</p>
+                        <p>Hi, {props.user.id}</p>
                         <AuthButton/>
-                        <Link to="/public">Demo</Link>&nbsp;&nbsp;
-                        <Link to="/protected/settings">Login</Link>
+                        <Link to="/login">Login</Link>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-12">
-                        <Route path="/public" component={Public}/>
-                        <Route path="/login" component={Login}/>
-                        <PrivateRoute path="/protected/transactions" component={Protected}/>
-                        <PrivateRoute path="/protected/settings" component={Protected}/>
-                        <PrivateRoute path="/protected/profile" component={Protected}/>
+                        <Switch>
+                            <Route exact path="/" component={App}/>
+                            <Route path="/login" component={WrappedLogin}/>
+                            <PrivateRoute path="/transactions" component={Transactions}/>
+                            <PrivateRoute path="/settings" component={Settings}/>
+                            <PrivateRoute path="/profile" component={Profile}/>
+                            <Redirect to="/"/>
+                        </Switch>
                     </div>
                 </div>
             </div>
         </Router>
     );
 }
+
+const mapStateToProps = state => ({user: state.user});
+
+const WrappedStart = connect(mapStateToProps)(Start);
 
 const fakeAuth = {
     isAuthenticated: false,
@@ -173,6 +154,7 @@ const AuthButton = withRouter(
 );
 
 function PrivateRoute({component: Component, ...rest}) {
+    console.log(rest);
     return (
         <Route
             {...rest}
@@ -192,21 +174,4 @@ function PrivateRoute({component: Component, ...rest}) {
     );
 }
 
-function Public() {
-    return <App/>;
-}
-
-function Protected() {
-    return <div>
-        <ul className="nav justify-content-end">
-            <li className="nav-item nav-link"><Link to="/protected/transactions">Transactions</Link></li>
-            <li className="nav-item nav-link"><Link to="/protected/settings">Settings</Link></li>
-            <li className="nav-item nav-link"><Link to="/protected/profile">Profile</Link></li>
-        </ul>
-        <Route path="/protected/transactions" component={Transactions}/>
-        <Route path="/protected/settings" component={Settings}/>
-        <Route path="/protected/profile" component={Profile}/>
-    </div>
-}
-
-export default Start;
+export default WrappedStart;
