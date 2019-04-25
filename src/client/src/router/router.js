@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Link, Redirect, Route, Switch, withRouter} from
 
 import {connect} from 'react-redux';
 import {axiosUserAction} from '../store/actions/user-actions.js';
+import axios from 'axios';
 
 import App from '../components/containers/app/App.js';
 import Transactions from '../components/containers/transactions/Transactions.js';
@@ -58,8 +59,11 @@ class Login extends Component {
                     <form className="needs-validation" onSubmit={this.handleSubmit}>
                         <div className="form-group">
                             <label htmlFor="userInputEmail1">Email</label>
-                            <input type="email" className="form-control" id="userInputEmail1"
-                                   aria-describedby="emailHelp" placeholder="Enter email"
+                            <input type="email"
+                                   className="form-control"
+                                   id="userInputEmail1"
+                                   aria-describedby="emailHelp"
+                                   placeholder="Enter email"
                                    value={this.state.email}
                                    onChange={this.handleChange}
                                    required/>
@@ -106,12 +110,12 @@ function Start(props) {
                 <div className="row">
                     <div className="col-12">
                         <Switch>
-                            <Route exact path="/" component={App}/>
-                            <Route path="/login" component={WrappedLogin}/>
-                            <PrivateRoute path="/transactions" component={Transactions}/>
-                            <PrivateRoute path="/settings" component={Settings}/>
-                            <PrivateRoute path="/profile" component={Profile}/>
-                            <Redirect to="/"/>
+                            <Route exact path="/" component={props=> <App {...props}/>}/>
+                            <Route exact path="/login" component={props=> <WrappedLogin {...props}/>}/>
+                            <Route exact path="/transactions" component={props=> <Transactions {...props}/>}/>
+                            <Route exact path="/settings" component={props=> <Settings {...props}/>}/>
+                            <Route exact path="/profile" component={props=> <Profile {...props}/>}/>
+                            <Route exact to="/"/>
                         </Switch>
                     </div>
                 </div>
