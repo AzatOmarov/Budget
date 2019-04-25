@@ -1,5 +1,6 @@
-/.idea/
 /dist/
 /node_modules/
+/public/
+/public/*
 
-package-lock.json
+package-lock.json 

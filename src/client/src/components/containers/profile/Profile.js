@@ -1,6 +1,12 @@
 import React, {Component} from 'react';
 import Title from '../../UIComponents/header/title/Title.js';
 import Slogan from '../../UIComponents/header/slogan/Slogan.js';
+import NameInput from '../../UIComponents/profileComponents/NameInput';
+import EmailInput from '../../UIComponents/profileComponents/EmailInput';
+import OldPassword from '../../UIComponents/profileComponents/OldPassword';
+import NewPassword from '../../UIComponents/profileComponents/NewPassword';
+import CancelSave from '../../UIComponents/button/CancelSave';
+import TSPButtonGroup from '../../UIComponents/button/TSPButtonGroup';
 
 class Profile extends Component {
     render() {
@@ -13,16 +19,16 @@ class Profile extends Component {
                     <div className="col-7">
                         <Slogan/>
                     </div>
+                    <TSPButtonGroup/>
                 </div>
                 <div className="frame-big">
-                    <div className="row">
-                        <div className="col-2"/>
-                        <div className="col-8">
-                            <h2>Profile</h2>
-                        </div>
-                        <div className="col-2"/>
-                    </div>
+                    <NameInput/>
+                    <EmailInput/>
+                    <OldPassword/>
+                    <NewPassword/>
+                    <CancelSave/>
                 </div>
+
             </div>
         )
     }

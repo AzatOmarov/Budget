@@ -27,9 +27,19 @@ class Login extends Component {
         this.setState({email: event.target.value});
     };
 
+    handleSubmit(event) {
+        event.preventDefault();
+        this.getUserByEmail();
+        this.login();
+    }
+
     getUserByEmail() {
         axios.get("http://localhost:2030/api/users/email/" + this.state.email).then(res => {
-            const user = res.data;
+            const user = {
+                id: 1,
+                name: "Azat",
+                email: "ok@gmail.ru"
+            };
         this.props.axiosUser(user);
         });
     }
@@ -40,11 +50,7 @@ class Login extends Component {
         });
     };
 
-    handleSubmit(event) {
-        event.preventDefault();
-        this.getUserByEmail();
-        this.login();
-    }
+  
 
     render() {
         let {from} = this.props.location.state || {from: {pathname: "/settings/wallet"}};
@@ -96,6 +102,7 @@ const WrappedLogin = connect(null, mapDispatchToProps)(Login);
 
 
 function Start(props) {
+    console.log(props)
     return (
         <Router>
             <div className="container">
@@ -111,11 +118,11 @@ function Start(props) {
                     <div className="col-12">
                         <Switch>
                             <Route exact path="/" component={props=> <App {...props}/>}/>
-                            <Route exact path="/login" component={props=> <WrappedLogin {...props}/>}/>
-                            <Route exact path="/transactions" component={props=> <Transactions {...props}/>}/>
-                            <Route exact path="/settings" component={props=> <Settings {...props}/>}/>
-                            <Route exact path="/profile" component={props=> <Profile {...props}/>}/>
-                            <Route exact to="/"/>
+                            <Route path="/login" component={props=> <WrappedLogin {...props}/>}/>
+                            <PrivateRoute path="/transactions" component={props=> <Transactions {...props}/>}/>
+                            <PrivateRoute path="/settings" component={props=> <Settings {...props}/>}/>
+                            <Route path="/profile" component={props=> <Profile {...props}/>}/>
+                            <Redirect to="/"/>
                         </Switch>
                     </div>
                 </div>

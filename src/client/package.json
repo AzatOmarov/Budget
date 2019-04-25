@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode development",
-    "start": "webpack-dev-server --mode development --open --hot"
+    "start": "export PORT=3001 && webpack-dev-server --mode development --open --hot"
   },
   "keywords": [],
   "author": "",
