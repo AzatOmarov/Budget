@@ -29,6 +29,7 @@ const fieldDescriptions = {
 
     const inputFields = {
         commonSets : {
+            fontSize: "20px",
             width: "256px",
             height: "35px",
             borderRadius: "5px",
@@ -42,10 +43,7 @@ const fieldDescriptions = {
           }
     }
 
-      
-
-
-class OldPassword extends React.Component {
+    class OldPassword extends React.Component {
     constructor(){
         super()
         this.state={
@@ -60,7 +58,7 @@ class OldPassword extends React.Component {
     }
 
     render(){
-        const {commonSets : commonSets, nameDescs : nameDescs, advice : advice} = fieldDescriptions;
+        const {commonSets : commonSets, nameDescs : nameDescs} = fieldDescriptions;
         const {commonSets : fieldCommons, nameField : nameField} = inputFields;
             return (
                 <div className="row">
@@ -72,13 +70,10 @@ class OldPassword extends React.Component {
                             style={Object.assign({},fieldCommons, nameField)}
                             type="text" 
                             value={this.state.oldPass}
-                            name="name"
+                            name="oldPass"
                             placeholder=""
                             onChange={this.handleChange}/>
                     </div>        
-                    {/* <div className="col-7">
-                        <p style={Object.assign({}, commonSets, advice)}>Make sure that you fill out all the fields before you leave this page</p> 
-                    </div>  */}
                 </div>
             )
         }

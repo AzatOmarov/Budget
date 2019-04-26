@@ -29,6 +29,7 @@ const fieldDescriptions = {
 
     const inputFields = {
         commonSets : {
+            fontSize: "20px",
             width: "256px",
             height: "35px",
             borderRadius: "5px",
@@ -41,9 +42,6 @@ const fieldDescriptions = {
             left : "25px"
           }
     }
-
-      
-
 
 class EmailInput extends React.Component {
     constructor(){
@@ -60,7 +58,7 @@ class EmailInput extends React.Component {
     }
 
     render(){
-        const {commonSets : commonSets, nameDescs : nameDescs, advice : advice} = fieldDescriptions;
+        const {commonSets : commonSets, nameDescs : nameDescs} = fieldDescriptions;
         const {commonSets : fieldCommons, nameField : nameField} = inputFields;
             return (
                 <div className="row">
@@ -72,13 +70,10 @@ class EmailInput extends React.Component {
                             style={Object.assign({},fieldCommons, nameField)}
                             type="text" 
                             value={this.state.email}
-                            name="name"
+                            name="email"
                             placeholder=""
                             onChange={this.handleChange}/>
                     </div>        
-                    {/* <div className="col-7">
-                        <p style={Object.assign({}, commonSets, advice)}>Wallet</p> 
-                    </div>  */}
                 </div>
             )
         }

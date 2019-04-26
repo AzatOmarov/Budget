@@ -29,6 +29,7 @@ const fieldDescriptions = {
 
     const inputFields = {
         commonSets : {
+            fontSize: "20px",
             width: "256px",
             height: "35px",
             borderRadius: "5px",
@@ -42,21 +43,21 @@ const fieldDescriptions = {
           }
     }
 
-      
-
-
 class NameInput extends React.Component {
     constructor(){
         super()
         this.state={
-            name: ""
+            userName: ""
         }
         this.handleChange = this.handleChange.bind(this);
 
     }
     handleChange(event){
         const{name, value} = event.target
-        this.setState({[name]:value})
+        console.log('name', name)
+        console.log('value', value)
+        this.setState({
+            [name]:value})
     }
 
     render(){
@@ -72,10 +73,10 @@ class NameInput extends React.Component {
                             style={Object.assign({},fieldCommons, nameField)}
                             type="text" 
                             value={this.state.name}
-                            name="name"
+                            name="userName"
                             placeholder=""
                             onChange={this.handleChange}/>
-                    </div>        
+                    </div>
                     <div className="col-7">
                         <p style={Object.assign({}, commonSets, advice)}>Make sure that you fill out all the fields before you leave this page</p> 
                     </div> 

@@ -29,6 +29,7 @@ const fieldDescriptions = {
 
     const inputFields = {
         commonSets : {
+            fontSize: "20px",
             width: "256px",
             height: "35px",
             borderRadius: "5px",
@@ -72,13 +73,10 @@ class NewPassword extends React.Component {
                             style={Object.assign({},fieldCommons, nameField)}
                             type="text" 
                             value={this.state.newPass}
-                            name="name"
+                            name="newPass"
                             placeholder=""
                             onChange={this.handleChange}/>
                     </div>        
-                    {/* <div className="col-7">
-                        <p style={Object.assign({}, commonSets, advice)}>Make sure that you fill out all the fields before you leave this page</p> 
-                    </div>  */}
                 </div>
             )
         }

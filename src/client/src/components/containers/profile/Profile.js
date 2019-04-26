@@ -8,7 +8,16 @@ import NewPassword from '../../UIComponents/profileComponents/NewPassword';
 import CancelSave from '../../UIComponents/button/CancelSave';
 import TSPButtonGroup from '../../UIComponents/button/TSPButtonGroup';
 
-class Profile extends Component {
+class Profile extends React.Component {
+    constructor(){
+        super()
+        this.state={
+            name : "",
+            email: "",
+            password: ""
+        }
+    }
+
     render() {
         return (
             <div className="container">
