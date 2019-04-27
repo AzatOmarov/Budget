@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Title from '../../UIComponents/header/title/Title.js';
-import Slogan from '../../UIComponents/header/slogan/Slogan.js';
+import Title from '../../UIComponents/header/Title.js';
+import Slogan from '../../UIComponents/header/Slogan.js';
 
 class Profile extends Component {
     render() {

@@ -14,17 +14,42 @@ class NewWallet extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            userId: 1,
+            currencyName: 'RUB'
+        };
 
+        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    handleChange(event) {
+        this.setState({currencyName: event.target.value});
+    };
+
     handleSubmit(event) {
         event.preventDefault();
-        // axios.get("http://localhost:2030/api/users/email/" + this.state.email).then(res => {
-        //     const user = res.data;
-        //     this.setState({user});
-        // });
+
+        console.log(this.state.userId);
+        console.log(this.state.currencyName);
+
+        const config = {
+            headers: {'Content-Type': 'application/json'}
+        };
+
+        const resp = axios.post('http://localhost:2030/api/wallets',
+            {
+                userId: this.state.userId,
+                currencyName: this.state.currencyName
+            }, config)
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+        console.log(resp);
     }
 
     render() {
@@ -49,12 +74,16 @@ class NewWallet extends Component {
                                 <form className="needs-validation" onSubmit={this.handleSubmit}>
                                     <div className="form-group">
                                         <label htmlFor="newWalletDropdownCurrency">Set main currency</label>
-                                        <select className="form-control" id="newWalletDropdownCurrency"
-                                                aria-describedby="currencyHelp" placeholder="Set main currency"
+                                        <select className="form-control"
+                                                id="newWalletDropdownCurrency"
+                                                value={this.state.currencyName}
+                                                onChange={this.handleChange}
+                                                aria-describedby="currencyHelp"
+                                                placeholder="Set main currency"
                                                 required>
-
-                                            <option selected>Choose...</option>
-                                            <option>...</option>
+                                            <option value={"RUB"}>RUB</option>
+                                            <option value={"USD"}>USD</option>
+                                            <option value={"EUR"}>EUR</option>
                                         </select>
                                     </div>
                                     <div className="form-group">

@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Link, Redirect, Route, Switch, withRouter} from 'react-router-dom';
-
 import {connect} from 'react-redux';
-import {axiosUserAction} from '../store/actions/user-actions.js';
-import axios from 'axios';
 
 import App from '../components/containers/app/App.js';
 import Transactions from '../components/containers/transactions/Transactions.js';
-import Settings from '../components/containers/settings/Settings.js';
+import Wallet from '../components/containers/wallet/Wallet.js';
+import Categories from '../components/containers/categories/Categories.js';
 import Profile from '../components/containers/profile/Profile.js';
+
+import axios from 'axios';
+import {axiosUserAction} from '../store/actions/user-actions';
 
 class Login extends Component {
 
@@ -30,7 +31,7 @@ class Login extends Component {
     getUserByEmail() {
         axios.get("http://localhost:2030/api/users/email/" + this.state.email).then(res => {
             const user = res.data;
-        this.props.axiosUser(user);
+            this.props.axiosUser(user);
         });
     }
 
@@ -47,7 +48,7 @@ class Login extends Component {
     }
 
     render() {
-        let {from} = this.props.location.state || {from: {pathname: "/settings/wallet"}};
+        let {from} = this.props.location.state || {from: {pathname: "/wallet"}};
         let {redirectToReferrer} = this.state;
 
         if (redirectToReferrer) return <Redirect to={from}/>;
@@ -58,14 +59,14 @@ class Login extends Component {
                     <p>You must log in to view more information</p>
                     <form className="needs-validation" onSubmit={this.handleSubmit}>
                         <div className="form-group">
-                            <label htmlFor="userInputEmail1">Email</label>
+                            <label htmlFor="userInputEmail">Email</label>
                             <input type="email"
                                    className="form-control"
-                                   id="userInputEmail1"
-                                   aria-describedby="emailHelp"
-                                   placeholder="Enter email"
+                                   id="userInputEmail"
                                    value={this.state.email}
                                    onChange={this.handleChange}
+                                   aria-describedby="emailHelp"
+                                   placeholder="Enter email"
                                    required/>
                             <small id="emailHelp" className="form-text text-muted">
                                 We'll never share your email with anyone else.
@@ -73,8 +74,11 @@ class Login extends Component {
                         </div>
                         <div className="form-group">
                             <label htmlFor="userInputPassword">Password</label>
-                            <input type="password" className="form-control" id="userInputPassword"
-                                   placeholder="Password" required/>
+                            <input type="password"
+                                   className="form-control"
+                                   id="userInputPassword"
+                                   placeholder="Password"
+                                   required/>
                         </div>
                         <input className="btn btn-primary" type="submit" value="Log in"/>
                     </form>
@@ -94,28 +98,26 @@ const mapDispatchToProps = dispatch => {
 
 const WrappedLogin = connect(null, mapDispatchToProps)(Login);
 
-
-function Start(props) {
+function Start() {
     return (
         <Router>
             <div className="container">
                 <div className="row">
                     <div className="col-6"/>
                     <div className="col-6 auth">
-                        <p>Hi, {props.user.id}</p>
-                        <AuthButton/>
-                        <Link to="/login">Login</Link>
+                        <AuthLink/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-12">
                         <Switch>
-                            <Route exact path="/" component={props=> <App {...props}/>}/>
-                            <Route exact path="/login" component={props=> <WrappedLogin {...props}/>}/>
-                            <Route exact path="/transactions" component={props=> <Transactions {...props}/>}/>
-                            <Route exact path="/settings" component={props=> <Settings {...props}/>}/>
-                            <Route exact path="/profile" component={props=> <Profile {...props}/>}/>
-                            <Route exact to="/"/>
+                            <Route exact path="/" component={App}/>
+                            <Route path="/login" component={WrappedLogin}/>
+                            <PrivateRoute path="/transactions" component={Protected}/>
+                            <PrivateRoute path="/wallet" component={Protected}/>
+                            <PrivateRoute path="/categories" component={Protected}/>
+                            <PrivateRoute path="/profile" component={Protected}/>
+                            <Redirect to="/"/>
                         </Switch>
                     </div>
                 </div>
@@ -124,9 +126,20 @@ function Start(props) {
     );
 }
 
-const mapStateToProps = state => ({user: state.user});
-
-const WrappedStart = connect(mapStateToProps)(Start);
+function Protected() {
+    return <div>
+        <ul className="nav justify-content-end">
+            <li className="nav-item nav-link"><Link to="/transactions">Transactions</Link></li>
+            <li className="nav-item nav-link"><Link to="/wallet">Wallet</Link></li>
+            <li className="nav-item nav-link"><Link to="/categories">Categories</Link></li>
+            <li className="nav-item nav-link"><Link to="/profile">Profile</Link></li>
+        </ul>
+        <Route path="/transactions" component={Transactions}/>
+        <Route path="/wallet" component={Wallet}/>
+        <Route path="/categories" component={Categories}/>
+        <Route path="/profile" component={Profile}/>
+    </div>
+}
 
 const fakeAuth = {
     isAuthenticated: false,
@@ -140,25 +153,22 @@ const fakeAuth = {
     }
 };
 
-const AuthButton = withRouter(
+const AuthLink = withRouter(
     ({history}) =>
         fakeAuth.isAuthenticated ? (
-            <p>
-                <a href="/"
-                   onClick={() => {
-                       fakeAuth.signout(() => history.push("/"));
-                   }}
-                >
-                    Sign out
-                </a>
-            </p>
+            <a href="/"
+               onClick={() => {
+                   fakeAuth.signout(() => history.push("/"));
+               }}
+            >
+                Sign out
+            </a>
         ) : (
-            <p>You are not logged in</p>
+            <Link to="/login">Login</Link>
         )
 );
 
 function PrivateRoute({component: Component, ...rest}) {
-    console.log(rest);
     return (
         <Route
             {...rest}
@@ -178,4 +188,6 @@ function PrivateRoute({component: Component, ...rest}) {
     );
 }
 
-export default WrappedStart;
+const mapStateToProps = state => ({user: state.user});
+
+export default connect(mapStateToProps)(Start);

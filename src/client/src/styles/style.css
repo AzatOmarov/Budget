@@ -61,14 +61,18 @@ div.main-block {
     margin: 1% 2% 1% 2%;
 }
 
-div.main-block-into {
-    margin: 2% 0 1% -10px;
+div.top-space{
+    margin: 3% 0 3% 0;
 }
 
-ul.sub-nav{
-    font-size: 18px;
+div.position-center{
+    text-align: center;
 }
 
+p.title{
+    text-align: center;
+    font-weight: bold;
+}
 .btn-primary {
     color: #fff;
     background-color: #5f8420;

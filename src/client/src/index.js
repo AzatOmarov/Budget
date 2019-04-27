@@ -8,15 +8,7 @@ import userReducer from './store/reducers/user-reducer.js';
 import Router from './router/router.js';
 import './styles/style.css';
 
-const initialState = {
-    user: {
-        id: null,
-        name: null,
-        email: null
-    }
-};
-
-const store = createStore(userReducer, initialState,
+const store = createStore(userReducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 ReactDOM.render(

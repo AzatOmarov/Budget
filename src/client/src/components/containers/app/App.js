@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import Title from '../../UIComponents/header/title/Title.js';
-import Slogan from '../../UIComponents/header/slogan/Slogan.js';
+import Title from '../../UIComponents/header/Title.js';
+import Slogan from '../../UIComponents/header/Slogan.js';
 import Carousel from '../../UIComponents/carousel/Carousel.js';
 
 class App extends Component {
